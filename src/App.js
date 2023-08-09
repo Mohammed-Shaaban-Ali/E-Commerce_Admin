@@ -1,7 +1,26 @@
 import "./App.css";
+import { BrowserRouter, Route, Routes } from "react-router-dom";
+
+import Login from "./pages/Forms/Login";
+import ResetPassword from "./pages/Forms/ResetPassword";
+import ForgetPassword from "./pages/Forms/ForgetPassword";
+import MainLayout from "./pages/MainLayout/MainLayout";
+import Dashboard from "./pages/Dashboard/Dashboard";
 
 function App() {
-  return <p>Whereas recognition of the inherent dignity</p>;
+  return (
+    <BrowserRouter>
+      <Routes>
+        <Route path="/" element={<Login />} />
+        <Route path="/reset-password" element={<ResetPassword />} />
+        <Route path="/rorget-password" element={<ForgetPassword />} />
+
+        <Route path="/admin" element={<MainLayout />}>
+          <Route index element={<Dashboard />} />
+        </Route>
+      </Routes>
+    </BrowserRouter>
+  );
 }
 
 export default App;
