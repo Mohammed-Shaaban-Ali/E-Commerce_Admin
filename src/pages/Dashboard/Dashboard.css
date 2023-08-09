@@ -1,0 +1,52 @@
+p {
+    margin-bottom: 0;
+}
+
+.cardContant {
+    cursor: pointer;
+    box-shadow: 0px 0px 3px 0.5px rgba(0, 0, 0, 0.1);
+    width: 30%;
+
+}
+
+
+.cardContant p {
+    color: rgba(128, 128, 128, 0.64);
+    margin-bottom: 16px;
+    font-weight: bold;
+}
+
+.cardContant h4 {
+    font-weight: bold;
+    font-size: 32px;
+    margin-top: 24px;
+    margin-bottom: 16px;
+}
+
+.cardContant h6 {
+    font-weight: bold;
+    text-align: end;
+}
+
+.increase {
+    display: flex;
+    flex-direction: row;
+    gap: 8px;
+    color: #0bd40b;
+    align-items: center;
+    justify-content: right;
+    font-size: 18px;
+    font-weight: bold;
+    margin-top: 32px;
+}
+
+.dencrease {
+    display: flex;
+    flex-direction: row;
+    gap: 8px;
+    color: red;
+    align-items: center;
+    justify-content: right;
+    font-size: 18px;
+    margin-top: 32px;
+}
