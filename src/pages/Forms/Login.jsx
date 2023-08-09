@@ -1,3 +1,4 @@
+import { Link } from "react-router-dom";
 import CustomInput from "../../components/CustomInput";
 import "./Forms.css";
 
@@ -24,13 +25,21 @@ const Login = () => {
             id="password"
             label="Enter Your password"
           />
-          <button
-            className="border-0 px-3 py-2 text-white fw-bold w-100"
+          <div className="text-end m-2">
+            <Link to="/rorget-password">Forget Password</Link>
+          </div>
+
+          <div
+            className="px-3 py-2 text-center"
             style={{ background: "#ffd333" }}
-            type="submit"
           >
-            Login
-          </button>
+            <Link
+              to="/admin"
+              className="border-0 text-white fw-bold w-100 text-white text-decoration-none"
+            >
+              Login
+            </Link>
+          </div>
         </form>
       </div>
     </div>
