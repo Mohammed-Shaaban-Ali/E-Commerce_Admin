@@ -34,7 +34,7 @@ p {
     gap: 8px;
     color: #0bd40b;
     align-items: center;
-    justify-content: end;
+    justify-content: right;
     font-size: 18px;
     font-weight: bold;
     margin-top: 32px;
@@ -46,7 +46,7 @@ p {
     gap: 8px;
     color: red;
     align-items: center;
-    justify-content: end;
+    justify-content: right;
     font-size: 18px;
     margin-top: 32px;
 }

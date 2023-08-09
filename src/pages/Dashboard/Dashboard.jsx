@@ -1,8 +1,85 @@
 import "./Dashboard.css";
+import { Column } from "@ant-design/plots";
 
 import { FaArrowTrendUp, FaArrowTrendDown } from "react-icons/fa6";
 
 const Dashboard = () => {
+  const data = [
+    {
+      type: "Jan",
+      sales: 38,
+    },
+    {
+      type: "Feb",
+      sales: 52,
+    },
+    {
+      type: "Mar",
+      sales: 61,
+    },
+    {
+      type: "Apr",
+      sales: 145,
+    },
+    {
+      type: "May",
+      sales: 48,
+    },
+    {
+      type: "Jun",
+      sales: 38,
+    },
+    {
+      type: "July",
+      sales: 38,
+    },
+    {
+      type: "Aug",
+      sales: 85,
+    },
+    {
+      type: "Spt",
+      sales: 65,
+    },
+    {
+      type: "Oct",
+      sales: 22,
+    },
+    {
+      type: "Nov",
+      sales: 50,
+    },
+    {
+      type: "Dev",
+      sales: 48,
+    },
+  ];
+  const config = {
+    data,
+    xField: "type",
+    yField: "sales",
+    label: {
+      position: "middle",
+      style: {
+        fill: "#FFFFFF",
+        opacity: 1,
+      },
+    },
+    xAxis: {
+      label: {
+        autoHide: true,
+        autoRotate: false,
+      },
+    },
+    meta: {
+      type: {
+        alias: "Month",
+      },
+      sales: {
+        alias: "Income",
+      },
+    },
+  };
   return (
     <div>
       <h3 className="mb-4">Dashboard</h3>
@@ -47,6 +124,12 @@ const Dashboard = () => {
             </div>
             <p>Compared To April 2022</p>
           </div>
+        </div>
+      </div>
+      <div className="mt-4">
+        <h3 className="mb-4">Income Statics</h3>
+        <div>
+          <Column {...config} />;
         </div>
       </div>
     </div>
