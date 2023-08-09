@@ -183,7 +183,7 @@ const MainLayout = () => {
               </div>
               <div className="info">
                 <h5 className="text-dark mb-0">Mohamed</h5>
-                <p className="mb-0">ms7500746@gmail.come</p>
+                <p className="mb-0">ms7500746@gmail.com</p>
               </div>
             </div>
           </div>
@@ -194,7 +194,7 @@ const MainLayout = () => {
             margin: "24px 16px",
             padding: 24,
             minHeight: 240,
-            backgroundColor: colorBgContainer,
+            // backgroundColor: ,
           }}
         >
           <Outlet />
