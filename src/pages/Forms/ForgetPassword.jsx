@@ -15,7 +15,7 @@ const ForgetPassword = () => {
       <div className="m-auto my-5 w-25 bg-white rounded-3 p-4">
         <h3 className="text-center">Forget Password</h3>
         <p className="text-center" style={{ color: "gray" }}>
-          Enter ypur register email to get reset password mail.
+          Enter your email to get reset password mail.
         </p>
         <form>
           <CustomInput type="email" id="email" label="Enter Address" />
