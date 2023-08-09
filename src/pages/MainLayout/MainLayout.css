@@ -7,15 +7,67 @@
 }
 
 .trigger:hover {
-    color: #1890ff;
-}
-
-.logo {
-    height: 32px;
-    margin: 16px;
-    background-color: rgba(255, 255, 255, 0.3);
+    color: #1890ff !important;
 }
 
 .ant-layout {
     min-height: 100vh;
+}
+
+.ant-layout-sider {
+    flex: 0 0 250px !important;
+    max-width: 250px !important;
+    width: 250px !important;
+}
+
+.ant-layout-sider-collapsed {
+    flex: 0 0 80px !important;
+    max-width: 80px !important;
+    width: 80px !important;
+}
+
+.logo {
+    background-color: gray;
+}
+
+.sm-logo {
+    display: none;
+    font-weight: bold;
+}
+
+.lg-logo {
+
+    font-weight: bold;
+}
+
+.ant-layout-sider-collapsed .lg-logo {
+    display: none;
+}
+
+.ant-layout-sider-collapsed .sm-logo {
+    display: block;
+}
+
+:where(.css-dev-only-do-not-override-fpg3f5).ant-menu-dark:not(.ant-menu-horizontal) .ant-menu-item:not(.ant-menu-item-selected):hover,
+:where(.css-dev-only-do-not-override-fpg3f5).ant-menu-dark>.ant-menu:not(.ant-menu-horizontal) .ant-menu-item:not(.ant-menu-item-selected):hover,
+li:hover {
+    background-color: #188fff99;
+
+}
+
+
+.adminPhoto {
+    width: 40px;
+    object-fit: cover;
+}
+
+.adminPhoto img {
+    border-radius: 50%;
+}
+
+.info p {
+    height: 0;
+    line-height: 0;
+    margin-top: 14px;
+    color: gray;
 }

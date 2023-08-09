@@ -6,6 +6,7 @@ import ResetPassword from "./pages/Forms/ResetPassword";
 import ForgetPassword from "./pages/Forms/ForgetPassword";
 import MainLayout from "./pages/MainLayout/MainLayout";
 import Dashboard from "./pages/Dashboard/Dashboard";
+import Customes from "./pages/Customes/Customes";
 
 function App() {
   return (
@@ -17,6 +18,7 @@ function App() {
 
         <Route path="/admin" element={<MainLayout />}>
           <Route index element={<Dashboard />} />
+          <Route path="customes" element={<Customes />} />
         </Route>
       </Routes>
     </BrowserRouter>
