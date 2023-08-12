@@ -7,3 +7,8 @@
 body {
   font-family: 'Roboto', sans-serif !important;
 }
+
+main {
+  height: 85vh;
+  overflow-y: scroll;
+}

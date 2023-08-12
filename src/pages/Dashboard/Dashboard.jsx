@@ -1,9 +1,11 @@
 import "./Dashboard.css";
 import { Column } from "@ant-design/plots";
+import { Table } from "antd";
 
 import { FaArrowTrendUp, FaArrowTrendDown } from "react-icons/fa6";
 
 const Dashboard = () => {
+  // Cart
   const data = [
     {
       type: "Jan",
@@ -80,6 +82,35 @@ const Dashboard = () => {
       },
     },
   };
+
+  // Table
+  const columns = [
+    {
+      title: "SNo",
+      dataIndex: "Key",
+    },
+    {
+      title: "Name",
+      dataIndex: "name",
+    },
+    {
+      title: "Product",
+      dataIndex: "Product",
+    },
+    {
+      title: "Status",
+      dataIndex: "Status",
+    },
+  ];
+  const data1 = [];
+  for (let i = 0; i < 46; i++) {
+    data1.push({
+      Key: i,
+      name: `Edward King ${i}`,
+      Product: `Product ${i}`,
+      Status: `Status ${i}`,
+    });
+  }
   return (
     <div>
       <h3 className="mb-4">Dashboard</h3>
@@ -130,6 +161,13 @@ const Dashboard = () => {
         <h3 className="mb-4">Income Statics</h3>
         <div>
           <Column {...config} />;
+        </div>
+      </div>
+
+      <div className="mt-4">
+        <h3 className="mb-4">Recent Orders</h3>
+        <div>
+          <Table columns={columns} dataSource={data1} />
         </div>
       </div>
     </div>
