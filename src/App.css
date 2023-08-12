@@ -12,3 +12,7 @@ main {
   height: 85vh;
   overflow-y: scroll;
 }
+
+main::-webkit-scrollbar {
+  width: 0;
+}
