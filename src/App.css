@@ -16,3 +16,23 @@ main {
 main::-webkit-scrollbar {
   width: 0;
 }
+
+.form-control {
+  border-radius: 0% !important;
+  transition: all 0.3s ease;
+}
+
+.form-control:focus {
+  background-color: transparent !important;
+  box-shadow: none !important;
+  border-color: black !important;
+
+}
+
+.form-control:hover {
+  border-color: black !important;
+}
+
+.quill {
+  background-color: white;
+}

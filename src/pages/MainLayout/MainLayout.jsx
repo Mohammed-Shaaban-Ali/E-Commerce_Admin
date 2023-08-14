@@ -66,9 +66,9 @@ const MainLayout = () => {
               label: "Catalog",
               children: [
                 {
-                  key: "product",
+                  key: "add-product",
                   icon: <AiOutlineShoppingCart className="fs-5" />,
-                  label: "Product",
+                  label: "Add Product",
                 },
                 {
                   key: "product-list",
@@ -76,9 +76,9 @@ const MainLayout = () => {
                   label: "Product List",
                 },
                 {
-                  key: "brand",
+                  key: "add-brand",
                   icon: <SiBrandfolder className="fs-5" />,
-                  label: "Brand",
+                  label: "Add Brand",
                 },
                 {
                   key: "brand-list",
@@ -86,9 +86,9 @@ const MainLayout = () => {
                   label: "Brand List",
                 },
                 {
-                  key: "category",
+                  key: "add-category",
                   icon: <BiCategoryAlt className="fs-5" />,
-                  label: "Category",
+                  label: "Add Category",
                 },
                 {
                   key: "category-list",
@@ -96,9 +96,9 @@ const MainLayout = () => {
                   label: "Category List",
                 },
                 {
-                  key: "color",
+                  key: "add-color",
                   icon: <AiOutlineBgColors className="fs-5" />,
-                  label: "Color",
+                  label: "Add Color",
                 },
                 {
                   key: "color-list",
@@ -118,9 +118,9 @@ const MainLayout = () => {
               label: "Blogs",
               children: [
                 {
-                  key: "blog",
+                  key: "add-blog",
                   icon: <ImBlog className="fs-5" />,
-                  label: "Blog",
+                  label: "Add Blog",
                 },
                 {
                   key: "blog-list",
@@ -128,9 +128,9 @@ const MainLayout = () => {
                   label: "Blog List",
                 },
                 {
-                  key: "blog-category",
+                  key: "add-blog-category",
                   icon: <ImBlog className="fs-5" />,
-                  label: "Blog Category",
+                  label: "Add Blog Category",
                 },
                 {
                   key: "blog-list-category",
