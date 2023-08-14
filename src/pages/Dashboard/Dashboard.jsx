@@ -87,7 +87,7 @@ const Dashboard = () => {
   const columns = [
     {
       title: "SNo",
-      dataIndex: "Key",
+      dataIndex: "SNo",
     },
     {
       title: "Name",
@@ -105,7 +105,7 @@ const Dashboard = () => {
   const data1 = [];
   for (let i = 0; i < 46; i++) {
     data1.push({
-      Key: i,
+      SNo: i,
       name: `Edward King ${i}`,
       Product: `Product ${i}`,
       Status: `Status ${i}`,
