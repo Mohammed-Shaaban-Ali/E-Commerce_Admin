@@ -5,12 +5,12 @@ import { getUsers } from "../../redux/slices/customerSlice";
 
 const Customes = () => {
   const dispatch = useDispatch();
-  useEffect(() => {
-    dispatch(getUsers());
-  }, []);
   const { customers, isError, isLoading, isSuccess, message } = useSelector(
     (state) => state.customers
   );
+  useEffect(() => {
+    dispatch(getUsers());
+  }, [customers]);
 
   // Table
   const columns = [

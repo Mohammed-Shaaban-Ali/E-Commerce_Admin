@@ -1,6 +1,19 @@
 import { Table } from "antd";
+import { useEffect } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import { Link } from "react-router-dom";
+import { getbrands } from "../../redux/slices/brandSlice";
+import { BiEdit } from "react-icons/bi";
+import { AiFillDelete } from "react-icons/ai";
 
 const BrandList = () => {
+  const dispatch = useDispatch();
+  const { brands, isError, isLoading, isSuccess, message } = useSelector(
+    (state) => state.brands
+  );
+  useEffect(() => {
+    dispatch(getbrands());
+  }, []);
   // Table
   const columns = [
     {
@@ -8,25 +21,29 @@ const BrandList = () => {
       dataIndex: "Key",
     },
     {
-      title: "Name",
-      dataIndex: "name",
+      title: "Title",
+      dataIndex: "title",
     },
     {
-      title: "Product",
-      dataIndex: "Product",
-    },
-    {
-      title: "Status",
-      dataIndex: "Status",
+      title: "Action",
+      dataIndex: "action",
     },
   ];
   const data1 = [];
-  for (let i = 0; i < 46; i++) {
+  for (let i = 0; i < brands.length; i++) {
     data1.push({
-      Key: i,
-      name: `Edward King ${i}`,
-      Product: `Product ${i}`,
-      Status: `Status ${i}`,
+      Key: i + 1,
+      title: brands[i].title,
+      action: (
+        <div className="d-flex gap-4 fs-5">
+          <Link style={{ color: "green" }} to="/1">
+            <BiEdit />
+          </Link>
+          <Link style={{ color: "red" }} to="/2">
+            <AiFillDelete />
+          </Link>
+        </div>
+      ),
     });
   }
   return (
