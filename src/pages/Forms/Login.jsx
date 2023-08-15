@@ -10,7 +10,7 @@ import { useEffect } from "react";
 const Login = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
-  const { user, isError, isLoading, isSuccess, masege } = useSelector(
+  const { user, isError, isLoading, isSuccess, message } = useSelector(
     (state) => state.auth
   );
 
@@ -30,10 +30,12 @@ const Login = () => {
   });
 
   useEffect(() => {
-    if (!user == null || isSuccess) {
+    if (isSuccess) {
       navigate("admin");
+    } else {
+      navigate("");
     }
-  }, [navigate, user, isError, isLoading, isSuccess, masege]);
+  }, [navigate, user, isError, isLoading, isSuccess, message]);
   return (
     <div className="py-5 " style={{ background: "gray", minHeight: "100vh" }}>
       <br />
@@ -46,6 +48,9 @@ const Login = () => {
         <p className="text-center" style={{ color: "gray" }}>
           Login to your account to continue
         </p>
+        <div className="error text-center">
+          {message.message === "Rejected" ? "You are not an admin" : ""}
+        </div>
         <form onSubmit={formik.handleSubmit}>
           <CustomInput
             type="email"
