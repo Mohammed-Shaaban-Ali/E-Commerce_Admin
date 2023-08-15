@@ -1,10 +1,11 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
+import colorsService from "../service/colorService";
 
 export const getcolors = createAsyncThunk(
   "auth/getcolors",
   async (thunkAPI) => {
     try {
-      return await colorsService.getcategory();
+      return await colorsService.getcolors();
     } catch (error) {
       return thunkAPI.rejectWithValue(error);
     }
@@ -23,15 +24,15 @@ const colorslice = createSlice({
   reducers: {},
   extraReducers: (builder) => {
     builder
-      .addCase(getcategory.pending, (state) => {
+      .addCase(getcolors.pending, (state) => {
         state.isLoading = true;
       })
-      .addCase(getcategory.fulfilled, (state, action) => {
+      .addCase(getcolors.fulfilled, (state, action) => {
         state.isLoading = false;
         state.isSuccess = true;
         state.colors = action.payload;
       })
-      .addCase(getcategory.rejected, (state, action) => {
+      .addCase(getcolors.rejected, (state, action) => {
         state.isError = true;
         state.isLoading = false;
         state.isSuccess = false;
