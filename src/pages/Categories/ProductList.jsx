@@ -8,12 +8,13 @@ import { AiFillDelete } from "react-icons/ai";
 
 const ProductList = () => {
   const dispatch = useDispatch();
-  useEffect(() => {
-    dispatch(getProducts());
-  }, []);
   const { products, isError, isLoading, isSuccess, message } = useSelector(
     (state) => state.products
   );
+  useEffect(() => {
+    dispatch(getProducts());
+  }, [products, isError, isLoading, isSuccess, message]);
+
   // Table
   const columns = [
     {
