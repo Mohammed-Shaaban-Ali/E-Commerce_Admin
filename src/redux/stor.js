@@ -5,6 +5,7 @@ import productSlice from "./slices/productSlice";
 import brandSlice from "./slices/brandSlice";
 import categorySlice from "./slices/categorySlice";
 import colorSlice from "./slices/colorSlice";
+import blogSlice from "./slices/blogSlice";
 
 const stor = configureStore({
   reducer: {
@@ -14,6 +15,7 @@ const stor = configureStore({
     brands: brandSlice,
     productCategory: categorySlice,
     colors: colorSlice,
+    blogs: blogSlice,
   },
 });
 
