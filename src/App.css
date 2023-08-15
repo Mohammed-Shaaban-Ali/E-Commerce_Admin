@@ -36,3 +36,9 @@ main::-webkit-scrollbar {
 .quill {
   background-color: white;
 }
+
+.error {
+  color: red;
+  font-size: 14px;
+  padding: 4px 8px;
+}
