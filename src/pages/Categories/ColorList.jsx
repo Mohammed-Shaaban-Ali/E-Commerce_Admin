@@ -30,10 +30,10 @@ const ColorList = () => {
     },
   ];
   const data1 = [];
-  for (let i = 0; i < categories.length; i++) {
+  for (let i = 0; i < colors.length; i++) {
     data1.push({
       Key: i + 1,
-      title: categories[i].title,
+      title: colors[i].title,
       action: (
         <div className="d-flex gap-4 fs-5">
           <Link style={{ color: "green" }} to="/1">
