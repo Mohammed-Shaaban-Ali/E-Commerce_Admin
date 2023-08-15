@@ -1,33 +1,50 @@
 import { Table } from "antd";
+import { useEffect } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import { getUsers } from "../../redux/slices/customerSlice";
 
 const Customes = () => {
+  const dispatch = useDispatch();
+  useEffect(() => {
+    dispatch(getUsers());
+  }, []);
+  const { customers, isError, isLoading, isSuccess, message } = useSelector(
+    (state) => state.customers
+  );
+
   // Table
   const columns = [
     {
       title: "SNo",
       dataIndex: "Key",
+      defaultSortOrder: "descend",
+      sorter: (a, b) => a.Key - b.key,
     },
     {
       title: "Name",
       dataIndex: "name",
+      defaultSortOrder: "descend",
+      sorter: (a, b) => a.name.length - b.name.length,
     },
     {
-      title: "Product",
-      dataIndex: "Product",
+      title: "Email",
+      dataIndex: "email",
     },
     {
-      title: "Status",
-      dataIndex: "Status",
+      title: "Mobile",
+      dataIndex: "mobile",
     },
   ];
   const data1 = [];
-  for (let i = 0; i < 46; i++) {
-    data1.push({
-      Key: i,
-      name: `Edward King ${i}`,
-      Product: `Product ${i}`,
-      Status: `Status ${i}`,
-    });
+  for (let i = 0; i < customers.length; i++) {
+    if (customers[i].role !== "admin") {
+      data1.push({
+        Key: i + 1,
+        name: customers[i].firstName + " " + customers[i].lastName,
+        mobile: customers[i].mobile,
+        email: customers[i].email,
+      });
+    }
   }
   return (
     <div>
