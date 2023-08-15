@@ -1,6 +1,19 @@
 import { Table } from "antd";
+import { useEffect } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import { Link } from "react-router-dom";
+import { getProducts } from "../../redux/slices/productSlice";
+import { BiEdit } from "react-icons/bi";
+import { AiFillDelete } from "react-icons/ai";
 
 const ProductList = () => {
+  const dispatch = useDispatch();
+  useEffect(() => {
+    dispatch(getProducts());
+  }, []);
+  const { products, isError, isLoading, isSuccess, message } = useSelector(
+    (state) => state.products
+  );
   // Table
   const columns = [
     {
@@ -8,25 +21,51 @@ const ProductList = () => {
       dataIndex: "Key",
     },
     {
-      title: "Name",
-      dataIndex: "name",
+      title: "Title",
+      dataIndex: "title",
     },
     {
-      title: "Product",
-      dataIndex: "Product",
+      title: "Brand",
+      dataIndex: "brand",
     },
     {
-      title: "Status",
-      dataIndex: "Status",
+      title: "Category",
+      dataIndex: "category",
+    },
+    {
+      title: "Color",
+      dataIndex: "color",
+    },
+    {
+      title: "Price",
+      dataIndex: "price",
+      defaultSortOrder: "descend",
+      sorter: (a, b) => a.price - b.price,
+    },
+    {
+      title: "Action",
+      dataIndex: "action",
     },
   ];
   const data1 = [];
-  for (let i = 0; i < 46; i++) {
+  for (let i = 0; i < products.length; i++) {
     data1.push({
-      Key: i,
-      name: `Edward King ${i}`,
-      Product: `Product ${i}`,
-      Status: `Status ${i}`,
+      Key: i + 1,
+      title: products[i].title,
+      brand: products[i].brand,
+      category: products[i].category,
+      color: products[i].color,
+      price: products[i].price,
+      action: (
+        <div className="d-flex gap-4 fs-5">
+          <Link style={{ color: "green" }} to="/1">
+            <BiEdit />
+          </Link>
+          <Link style={{ color: "red" }} to="/2">
+            <AiFillDelete />
+          </Link>
+        </div>
+      ),
     });
   }
   return (
