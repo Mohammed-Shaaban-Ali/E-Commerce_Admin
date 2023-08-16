@@ -7,6 +7,7 @@ import categorySlice from "./slices/categorySlice";
 import colorSlice from "./slices/colorSlice";
 import blogSlice from "./slices/blogSlice";
 import blogCategorySlice from "./slices/blogCategorySlice";
+import enquirySlice from "./slices/enquirySlice";
 
 const stor = configureStore({
   reducer: {
@@ -18,6 +19,7 @@ const stor = configureStore({
     colors: colorSlice,
     blogs: blogSlice,
     blogCategory: blogCategorySlice,
+    enquiries: enquirySlice,
   },
 });
 
