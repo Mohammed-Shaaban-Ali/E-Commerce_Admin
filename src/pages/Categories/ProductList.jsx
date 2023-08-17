@@ -55,7 +55,7 @@ const ProductList = () => {
       title: products[i].title,
       brand: products[i].brand,
       category: products[i].category,
-      color: products[i].color,
+      color: products[i].color[0].color,
       price: products[i].price,
       action: (
         <div className="d-flex gap-4 fs-5">

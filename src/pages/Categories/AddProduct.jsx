@@ -12,6 +12,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { getcategory } from "../../redux/slices/categorySlice";
 import { getcolors } from "../../redux/slices/colorSlice";
 import { deleteImg, uploadImg } from "../../redux/slices/uploadSlice";
+import { addProduct } from "../../redux/slices/productSlice";
 
 const AddProduct = () => {
   const dispatch = useDispatch();
@@ -28,19 +29,17 @@ const AddProduct = () => {
     dispatch(getbrands());
     dispatch(getcategory());
     dispatch(getcolors());
-    formik.values.color = ColorsList;
-    console.log(formik.values.color);
-  }, []);
+  }, [images]);
 
   const ColorsData = [];
-  colors.forEach((element) => {
+  colors?.forEach((element) => {
     ColorsData.push({
       id: element._id,
       color: element.title,
     });
   });
   const imagesData = [];
-  images.forEach((element) => {
+  images?.forEach((element) => {
     imagesData.push({
       public_id: element.public_id,
       url: element.url,
@@ -48,7 +47,7 @@ const AddProduct = () => {
   });
   useEffect(() => {
     formik.values.color = ColorsList;
-    formik.values.images = imagesList;
+    formik.values.images = imagesData;
   }, [ColorsList, imagesList]);
 
   let userSchema = object({
@@ -72,8 +71,8 @@ const AddProduct = () => {
     },
     validationSchema: userSchema,
     onSubmit: (values) => {
-      alert(JSON.stringify(values));
-      console.log(ColorsList);
+      console.log(values);
+      dispatch(addProduct(values));
     },
   });
 
