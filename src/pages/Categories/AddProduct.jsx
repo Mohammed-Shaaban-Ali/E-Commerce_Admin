@@ -11,25 +11,45 @@ import { getbrands } from "../../redux/slices/brandSlice";
 import { useDispatch, useSelector } from "react-redux";
 import { getcategory } from "../../redux/slices/categorySlice";
 import { getcolors } from "../../redux/slices/colorSlice";
+import { deleteImg, uploadImg } from "../../redux/slices/uploadSlice";
 
 const AddProduct = () => {
   const dispatch = useDispatch();
+
   const [ColorsList, setColorsList] = useState([]);
+  const [imagesList, setimagesList] = useState([]);
+
   const { brands } = useSelector((state) => state.brands);
   const { categories } = useSelector((state) => state.productCategory);
   const { colors } = useSelector((state) => state.colors);
+  const { images } = useSelector((state) => state.upload);
+
   useEffect(() => {
     dispatch(getbrands());
     dispatch(getcategory());
     dispatch(getcolors());
+    formik.values.color = ColorsList;
+    console.log(formik.values.color);
   }, []);
-  const ColorsDate = [];
+
+  const ColorsData = [];
   colors.forEach((element) => {
-    ColorsDate.push({
+    ColorsData.push({
       id: element._id,
       color: element.title,
     });
   });
+  const imagesData = [];
+  images.forEach((element) => {
+    imagesData.push({
+      public_id: element.public_id,
+      url: element.url,
+    });
+  });
+  useEffect(() => {
+    formik.values.color = ColorsList;
+    formik.values.images = imagesList;
+  }, [ColorsList, imagesList]);
 
   let userSchema = object({
     title: string().required(),
@@ -47,6 +67,8 @@ const AddProduct = () => {
       brand: "",
       category: "",
       quantity: "",
+      color: "",
+      images: "",
     },
     validationSchema: userSchema,
     onSubmit: (values) => {
@@ -113,7 +135,7 @@ const AddProduct = () => {
               value={formik.values.brand}
             >
               <option value="">Select Brand</option>
-              {brands.map((i, indx) => (
+              {brands?.map((i, indx) => (
                 <option key={indx} value={i.title}>
                   {i.title}
                 </option>
@@ -132,7 +154,7 @@ const AddProduct = () => {
               value={formik.values.category}
             >
               <option value="">Select category</option>
-              {categories.map((i, indx) => (
+              {categories?.map((i, indx) => (
                 <option key={indx} value={i.title}>
                   {i.title}
                 </option>
@@ -147,7 +169,7 @@ const AddProduct = () => {
               dataKey="id"
               textField="color"
               placeholder="Choose a color"
-              data={ColorsDate}
+              data={ColorsData}
               onChange={(e) => setColorsList(e)}
             />
 
@@ -165,7 +187,9 @@ const AddProduct = () => {
               ) : null}
             </div>
             <div className="bg-white text-center p-5 border-1">
-              <Dropzone onDrop={(acceptedFiles) => console.log(acceptedFiles)}>
+              <Dropzone
+                onDrop={(acceptedFiles) => dispatch(uploadImg(acceptedFiles))}
+              >
                 {({ getRootProps, getInputProps }) => (
                   <section>
                     <div {...getRootProps()}>
@@ -177,6 +201,18 @@ const AddProduct = () => {
                   </section>
                 )}
               </Dropzone>
+            </div>
+            <div className="showImages d-flex flex-wrap gap-3">
+              {images?.map((img, index) => (
+                <div className="position-relative" key={index}>
+                  <button
+                    className="btn-close position-absolute"
+                    style={{ top: "10px", right: "10px" }}
+                    onClick={() => dispatch(deleteImg(img.public_id))}
+                  ></button>
+                  <img src={img.url} alt={img.url} width={200} height={200} />
+                </div>
+              ))}
             </div>
             <button
               type="submit"
