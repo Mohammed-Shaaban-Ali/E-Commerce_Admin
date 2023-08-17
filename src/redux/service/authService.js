@@ -1,16 +1,5 @@
 import request from "../../utils/request";
 
-const { token } = localStorage.getItem("user")
-  ? JSON.parse(localStorage.getItem("user"))
-  : null;
-
-const config = {
-  headers: {
-    Authorization: `Bearer ${token}`,
-    accept: "application/json",
-  },
-};
-
 const login = async (userData) => {
   const { data } = await request.post("/api/user/login", userData);
   if (data) {

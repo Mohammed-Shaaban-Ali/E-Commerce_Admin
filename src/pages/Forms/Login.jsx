@@ -56,6 +56,7 @@ const Login = () => {
             type="email"
             id="email"
             label="Enter Your Email"
+            name="email"
             onChange={formik.handleChange("email")}
             value={formik.values.email}
           />
@@ -69,6 +70,7 @@ const Login = () => {
             type="password"
             id="password"
             label="Enter Your password"
+            name="password"
             onChange={formik.handleChange("password")}
             value={formik.values.password}
           />
