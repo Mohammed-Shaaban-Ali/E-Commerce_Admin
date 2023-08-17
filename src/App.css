@@ -37,8 +37,12 @@ main::-webkit-scrollbar {
   background-color: white;
 }
 
+.ql-container {
+  min-height: 200px;
+}
+
 .error {
   color: red;
   font-size: 14px;
-  padding: 4px 8px;
+  padding: 0 8px;
 }
