@@ -44,23 +44,23 @@ const Order = () => {
     data1.push({
       Key: i + 1,
       name: orders[i].orderBy.firstName + " " + orders[i].orderBy.lastName,
-      Product: orders[i].products.map((i) => {
+      Product: orders[i].products?.map((i) => {
         return (
           <>
             <ul>
               <li>
-                <p>{i.product.title}</p>
+                <p>{i.product?.title}</p>
               </li>
             </ul>
           </>
         );
       }),
-      price: orders[i].products.map((i) => {
+      price: orders[i].products?.map((i) => {
         return (
           <>
             <ul>
               <li>
-                <p>{i.product.price}</p>
+                <p>{i.product?.price}</p>
               </li>
             </ul>
           </>
