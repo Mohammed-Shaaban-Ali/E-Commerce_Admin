@@ -2,7 +2,7 @@ import { Table } from "antd";
 import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { Link } from "react-router-dom";
-import { getbrands } from "../../redux/slices/brandSlice";
+import { getbrands, resetState } from "../../redux/slices/brandSlice";
 import { BiEdit } from "react-icons/bi";
 import { AiFillDelete } from "react-icons/ai";
 
@@ -12,6 +12,7 @@ const BrandList = () => {
     (state) => state.brands
   );
   useEffect(() => {
+    dispatch(resetState());
     dispatch(getbrands());
   }, []);
   // Table
@@ -36,10 +37,16 @@ const BrandList = () => {
       title: brands[i].title,
       action: (
         <div className="d-flex gap-4 fs-5">
-          <Link style={{ color: "green" }} to="/1">
+          <Link
+            style={{ color: "green" }}
+            to={`/admin/edit-brand/${brands[i]._id}`}
+          >
             <BiEdit />
           </Link>
-          <Link style={{ color: "red" }} to="/2">
+          <Link
+            style={{ color: "red" }}
+            to={`/admin/edit-brand/${brands[i]._id}`}
+          >
             <AiFillDelete />
           </Link>
         </div>

@@ -14,8 +14,25 @@ const addBrand = async (brand) => {
   );
   return data;
 };
+
+const getSingleBrand = async (id) => {
+  const { data } = await request.get(`/api/brand-category/${id}`, ConfigToken);
+  return data.title;
+};
+const updateBrand = async (brandData) => {
+  const { id, Data } = brandData;
+  const { data } = await request.put(
+    `/api/brand-category/${id}`,
+    Data,
+    ConfigToken
+  );
+  return data;
+};
+
 const brandsService = {
   getbrand,
   addBrand,
+  getSingleBrand,
+  updateBrand,
 };
 export default brandsService;

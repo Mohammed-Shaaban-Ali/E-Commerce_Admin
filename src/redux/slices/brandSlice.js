@@ -11,6 +11,16 @@ export const getbrands = createAsyncThunk(
     }
   }
 );
+export const getSingleBrand = createAsyncThunk(
+  "brand/getSingleBrand",
+  async (id, thunkAPI) => {
+    try {
+      return await brandsService.getSingleBrand(id);
+    } catch (error) {
+      return thunkAPI.rejectWithValue(error);
+    }
+  }
+);
 export const addBrand = createAsyncThunk(
   "brand/addBrand",
   async (brand, thunkAPI) => {
@@ -21,6 +31,17 @@ export const addBrand = createAsyncThunk(
     }
   }
 );
+export const updateBrand = createAsyncThunk(
+  "brand/updateBrand",
+  async (brandData, thunkAPI) => {
+    try {
+      return await brandsService.updateBrand(brandData);
+    } catch (error) {
+      return thunkAPI.rejectWithValue(error);
+    }
+  }
+);
+
 export const resetState = createAction("Reset_all");
 
 const initialState = {
@@ -61,6 +82,35 @@ const brandSlice = createSlice({
         state.createdbrand = action.payload;
       })
       .addCase(addBrand.rejected, (state, action) => {
+        state.isError = true;
+        state.isLoading = false;
+        state.isSuccess = false;
+        state.message = action.error;
+      })
+
+      .addCase(getSingleBrand.pending, (state) => {
+        state.isLoading = true;
+      })
+      .addCase(getSingleBrand.fulfilled, (state, action) => {
+        state.isLoading = false;
+        state.isSuccess = true;
+        state.singlebrand = action.payload;
+      })
+      .addCase(getSingleBrand.rejected, (state, action) => {
+        state.isError = true;
+        state.isLoading = false;
+        state.isSuccess = false;
+        state.message = action.error;
+      })
+      .addCase(updateBrand.pending, (state) => {
+        state.isLoading = true;
+      })
+      .addCase(updateBrand.fulfilled, (state, action) => {
+        state.isLoading = false;
+        state.isSuccess = true;
+        state.updateBrandData = action.payload;
+      })
+      .addCase(updateBrand.rejected, (state, action) => {
         state.isError = true;
         state.isLoading = false;
         state.isSuccess = false;
