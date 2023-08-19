@@ -17,6 +17,7 @@ import { BiCategoryAlt } from "react-icons/bi";
 import { FaClipboardList, FaBloggerB } from "react-icons/fa";
 import { ImBlog } from "react-icons/im";
 import { IoIosNotifications } from "react-icons/io";
+import { RiCouponLine } from "react-icons/ri";
 
 import { Layout, Menu, Button, theme } from "antd";
 import { Content } from "antd/es/layout/layout";
@@ -107,6 +108,23 @@ const MainLayout = () => {
                   key: "color-list",
                   icon: <AiOutlineBgColors className="fs-5" />,
                   label: "Color List",
+                },
+              ],
+            },
+            {
+              key: "marketing",
+              icon: <RiCouponLine className="fs-4" />,
+              label: "Marketing",
+              children: [
+                {
+                  key: "add-coupon",
+                  icon: <ImBlog className="fs-5" />,
+                  label: "Add Coupon",
+                },
+                {
+                  key: "coupon-list",
+                  icon: <RiCouponLine className="fs-5" />,
+                  label: "Coupon List",
                 },
               ],
             },
