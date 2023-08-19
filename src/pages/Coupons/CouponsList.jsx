@@ -8,9 +8,7 @@ import { getCuopons } from "../../redux/slices/couponSlice";
 
 const CouponsList = () => {
   const dispatch = useDispatch();
-  const { coupons, isError, isLoading, isSuccess, message } = useSelector(
-    (state) => state.coupons
-  );
+  const { coupons } = useSelector((state) => state.coupons);
   useEffect(() => {
     dispatch(getCuopons());
   }, []);
@@ -27,6 +25,7 @@ const CouponsList = () => {
     {
       title: "disCount",
       dataIndex: "disCount",
+      sorter: (a, b) => a.disCount - b.disCount,
     },
     {
       title: "Expiry",
@@ -43,7 +42,7 @@ const CouponsList = () => {
       Key: i + 1,
       name: coupons[i].name,
       disCount: coupons[i].discount,
-      expiry: new Date(coupons[i].expiry).toDateString(),
+      expiry: new Date(coupons[i].expiry).toLocaleString(),
       action: (
         <div className="d-flex gap-4 fs-5">
           <Link style={{ color: "green" }} to="/1">
