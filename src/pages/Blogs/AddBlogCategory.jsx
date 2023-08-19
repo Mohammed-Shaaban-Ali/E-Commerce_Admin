@@ -4,7 +4,6 @@ import { useDispatch, useSelector } from "react-redux";
 import { object, string } from "yup";
 import { toast } from "react-toastify";
 import { useFormik } from "formik";
-import { addcategory } from "../../redux/slices/categorySlice";
 import { addBlogcategory } from "../../redux/slices/blogCategorySlice";
 
 let userSchema = object().shape({
