@@ -2,28 +2,42 @@ import React, { useEffect, useState } from "react";
 import CustomInput from "../../components/CustomInput";
 import ReactQuill from "react-quill";
 import "react-quill/dist/quill.snow.css";
-import Multiselect from "react-widgets/Multiselect";
 import Dropzone from "react-dropzone";
-
+import { Select } from "antd";
 import { useFormik } from "formik";
-import { number, object, string } from "yup";
+import { array, number, object, string } from "yup";
 import { getbrands } from "../../redux/slices/brandSlice";
 import { useDispatch, useSelector } from "react-redux";
 import { getcategory } from "../../redux/slices/categorySlice";
 import { getcolors } from "../../redux/slices/colorSlice";
 import { deleteImg, uploadImg } from "../../redux/slices/uploadSlice";
 import { addProduct } from "../../redux/slices/productSlice";
+import { toast } from "react-toastify";
 
+let userSchema = object().shape({
+  title: string().required(),
+  description: string().required(),
+  price: number().required(),
+  quantity: number().required(),
+  brand: string().required(),
+  category: string().required(),
+  tages: string().required(),
+  color: array()
+    .min(1, "Pick at least one color")
+    .required("Color is Required"),
+});
 const AddProduct = () => {
   const dispatch = useDispatch();
 
-  const [ColorsList, setColorsList] = useState([]);
-  const [imagesList, setimagesList] = useState([]);
+  const [color, setColor] = useState([]);
 
   const { brands } = useSelector((state) => state.brands);
   const { categories } = useSelector((state) => state.productCategory);
   const { colors } = useSelector((state) => state.colors);
   const { images } = useSelector((state) => state.upload);
+  const { isError, isLoading, isSuccess, createdProduct } = useSelector(
+    (state) => state.products
+  );
 
   useEffect(() => {
     dispatch(getbrands());
@@ -31,11 +45,18 @@ const AddProduct = () => {
     dispatch(getcolors());
   }, [images]);
 
-  const ColorsData = [];
-  colors?.forEach((element) => {
-    ColorsData.push({
-      id: element._id,
-      color: element.title,
+  useEffect(() => {
+    if (isSuccess && createdProduct)
+      toast.success("Product added successfully");
+
+    if (isError) toast.error("some thing went wrong");
+  }, [isError, isLoading, isSuccess]);
+
+  const coloropt = [];
+  colors.forEach((i) => {
+    coloropt.push({
+      label: i.title,
+      value: i._id,
     });
   });
   const imagesData = [];
@@ -46,18 +67,10 @@ const AddProduct = () => {
     });
   });
   useEffect(() => {
-    formik.values.color = ColorsList;
+    formik.values.color = color ? color : " ";
     formik.values.images = imagesData;
-  }, [ColorsList, imagesList]);
+  }, [color, imagesData]);
 
-  let userSchema = object({
-    title: string().required(),
-    description: string().required(),
-    price: number().required(),
-    quantity: number().required(),
-    brand: string().required(),
-    category: string().required(),
-  });
   const formik = useFormik({
     initialValues: {
       title: "",
@@ -65,17 +78,25 @@ const AddProduct = () => {
       price: "",
       brand: "",
       category: "",
+      tages: "",
       quantity: "",
       color: "",
       images: "",
     },
     validationSchema: userSchema,
     onSubmit: (values) => {
-      console.log(values);
       dispatch(addProduct(values));
+      formik.resetForm();
+      setColor(null);
+      setTimeout(() => {
+        console.log("object");
+      }, 300);
     },
   });
 
+  const handleColors = (e) => {
+    setColor(e);
+  };
   return (
     <div>
       <div className="mt-4">
@@ -133,7 +154,9 @@ const AddProduct = () => {
               onChange={formik.handleChange("brand")}
               value={formik.values.brand}
             >
-              <option value="">Select Brand</option>
+              <option disabled value="">
+                Select Brand
+              </option>
               {brands?.map((i, indx) => (
                 <option key={indx} value={i.title}>
                   {i.title}
@@ -152,7 +175,9 @@ const AddProduct = () => {
               onChange={formik.handleChange("category")}
               value={formik.values.category}
             >
-              <option value="">Select category</option>
+              <option disabled value="">
+                Select category
+              </option>
               {categories?.map((i, indx) => (
                 <option key={indx} value={i.title}>
                   {i.title}
@@ -164,14 +189,39 @@ const AddProduct = () => {
                 <div>{formik.errors.category}</div>
               ) : null}
             </div>
-            <Multiselect
-              dataKey="id"
-              textField="color"
-              placeholder="Choose a color"
-              data={ColorsData}
-              onChange={(e) => setColorsList(e)}
-            />
 
+            <select
+              className="form-control py-2 "
+              name="tages"
+              id="tages"
+              onChange={formik.handleChange("tages")}
+              value={formik.values.tages}
+            >
+              <option disabled value="">
+                Select category
+              </option>
+              <option value="featured">Featured</option>
+              <option value="popular">Popular</option>
+              <option value="special">Special</option>
+            </select>
+            <div className="error">
+              {formik.touched.tages && formik.errors.tages ? (
+                <div>{formik.errors.tages}</div>
+              ) : null}
+            </div>
+
+            <Select
+              mode="multiple"
+              allowClear
+              className="w-100"
+              placeholder="Select colors"
+              defaultValue={color}
+              onChange={(i) => handleColors(i)}
+              options={coloropt}
+            />
+            <div className="error">
+              {formik.touched.color && formik.errors.color}
+            </div>
             <CustomInput
               type="number"
               label="Enter product quantity"

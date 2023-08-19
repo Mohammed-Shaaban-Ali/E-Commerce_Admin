@@ -1,3 +1,6 @@
+import { ToastContainer } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
+
 import React, { useState } from "react";
 import { useNavigate, Outlet } from "react-router-dom";
 import "./MainLayout.css";
@@ -197,6 +200,18 @@ const MainLayout = () => {
             // backgroundColor: ,
           }}
         >
+          <ToastContainer
+            position="top-right"
+            autoClose={250}
+            hideProgressBar={false}
+            newestOnTop={true}
+            closeOnClick
+            rtl={false}
+            pauseOnFocusLoss
+            draggable
+            pauseOnHover
+            theme="light"
+          />
           <Outlet />
         </Content>
       </Layout>

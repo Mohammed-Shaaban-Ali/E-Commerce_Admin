@@ -26,7 +26,6 @@ const productSlice = createSlice({
   name: "products",
   initialState: {
     products: [],
-    addProduct: "",
     isError: false,
     isLoading: false,
     isSuccess: false,
@@ -56,7 +55,7 @@ const productSlice = createSlice({
       .addCase(addProduct.fulfilled, (state, action) => {
         state.isLoading = false;
         state.isSuccess = true;
-        state.addProduct = action.payload;
+        state.createdProduct = action.payload;
       })
       .addCase(addProduct.rejected, (state, action) => {
         state.isError = true;
