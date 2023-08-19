@@ -4,7 +4,10 @@ import { useDispatch, useSelector } from "react-redux";
 import { object, string } from "yup";
 import { toast } from "react-toastify";
 import { useFormik } from "formik";
-import { addBlogcategory } from "../../redux/slices/blogCategorySlice";
+import {
+  addBlogcategory,
+  resetState,
+} from "../../redux/slices/blogCategorySlice";
 
 let userSchema = object().shape({
   title: string().required("Blog Category Name is required"),
@@ -32,6 +35,9 @@ const AddBlogCategory = () => {
     onSubmit: (values) => {
       dispatch(addBlogcategory(values));
       formik.resetForm();
+      setTimeout(() => {
+        dispatch(resetState());
+      }, 3000);
     },
   });
   return (

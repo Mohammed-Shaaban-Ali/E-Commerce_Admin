@@ -4,7 +4,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { object, string } from "yup";
 import { toast } from "react-toastify";
 import { useFormik } from "formik";
-import { addcategory } from "../../redux/slices/categorySlice";
+import { addcategory, resetState } from "../../redux/slices/categorySlice";
 
 let userSchema = object().shape({
   title: string().required("Category Name is required"),
@@ -31,6 +31,9 @@ const AddCategory = () => {
     onSubmit: (values) => {
       dispatch(addcategory(values));
       formik.resetForm();
+      setTimeout(() => {
+        dispatch(resetState());
+      }, 3000);
     },
   });
   return (

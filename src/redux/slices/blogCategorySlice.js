@@ -1,4 +1,4 @@
-import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
+import { createAction, createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import blogCategoryService from "../service/blogCategoryService";
 
 export const getblogCategory = createAsyncThunk(
@@ -21,16 +21,18 @@ export const addBlogcategory = createAsyncThunk(
     }
   }
 );
+export const resetState = createAction("Reset_all");
 
+const initialState = {
+  blogCategory: [],
+  isError: false,
+  isLoading: false,
+  isSuccess: false,
+  message: "",
+};
 const blogCategorylice = createSlice({
   name: "blogCategory",
-  initialState: {
-    blogCategory: [],
-    isError: false,
-    isLoading: false,
-    isSuccess: false,
-    message: "",
-  },
+  initialState,
   reducers: {},
   extraReducers: (builder) => {
     builder
@@ -62,7 +64,8 @@ const blogCategorylice = createSlice({
         state.isLoading = false;
         state.isSuccess = false;
         state.message = action.error;
-      });
+      })
+      .addCase(resetState, () => initialState);
   },
 });
 export default blogCategorylice.reducer;

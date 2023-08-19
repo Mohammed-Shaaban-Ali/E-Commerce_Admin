@@ -2,7 +2,7 @@ import { useEffect } from "react";
 import CustomInput from "../../components/CustomInput";
 import { useDispatch, useSelector } from "react-redux";
 import { object, string } from "yup";
-import { addBrand } from "../../redux/slices/brandSlice";
+import { addBrand, resetState } from "../../redux/slices/brandSlice";
 import { toast } from "react-toastify";
 import { useFormik } from "formik";
 
@@ -31,6 +31,9 @@ const AddBrand = () => {
     onSubmit: (values) => {
       dispatch(addBrand(values));
       formik.resetForm();
+      setTimeout(() => {
+        dispatch(resetState());
+      }, 3000);
     },
   });
   return (
