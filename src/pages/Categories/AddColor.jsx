@@ -4,7 +4,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { object, string } from "yup";
 import { toast } from "react-toastify";
 import { useFormik } from "formik";
-import { addcolor } from "../../redux/slices/colorSlice";
+import { addcolor, resetState } from "../../redux/slices/colorSlice";
 
 let userSchema = object().shape({
   title: string().required("color Name is required"),
@@ -33,6 +33,9 @@ const AddColor = () => {
     onSubmit: (values) => {
       dispatch(addcolor(values));
       formik.resetForm();
+      setTimeout(() => {
+        dispatch(resetState());
+      }, 3000);
     },
   });
   return (

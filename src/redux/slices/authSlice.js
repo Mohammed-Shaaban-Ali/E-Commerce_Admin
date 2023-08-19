@@ -1,4 +1,4 @@
-import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
+import { createAction, createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import authService from "../service/authService";
 
 const getUserFromLocalStorge = localStorage.getItem("user")
@@ -23,17 +23,19 @@ export const getOrders = createAsyncThunk(
     }
   }
 );
+export const resetState = createAction("Reset_all");
 
+const initialState = {
+  user: getUserFromLocalStorge,
+  orders: [],
+  isError: false,
+  isLoading: false,
+  isSuccess: false,
+  message: "",
+};
 const authSlice = createSlice({
   name: "auth",
-  initialState: {
-    user: getUserFromLocalStorge,
-    orders: [],
-    isError: false,
-    isLoading: false,
-    isSuccess: false,
-    message: "",
-  },
+  initialState,
   reducers: {},
   extraReducers: (builder) => {
     builder
@@ -67,7 +69,8 @@ const authSlice = createSlice({
         state.isLoading = false;
         state.isSuccess = false;
         state.message = action.payload;
-      });
+      })
+      .addCase(resetState, () => initialState);
   },
 });
 export default authSlice.reducer;

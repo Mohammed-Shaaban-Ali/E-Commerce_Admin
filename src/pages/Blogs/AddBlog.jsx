@@ -9,7 +9,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { getcategory } from "../../redux/slices/categorySlice";
 import { deleteImg, uploadImg } from "../../redux/slices/uploadSlice";
 import { toast } from "react-toastify";
-import { addBlogs } from "../../redux/slices/blogSlice";
+import { addBlogs, resetState } from "../../redux/slices/blogSlice";
 
 let userSchema = object().shape({
   title: string().required(),
@@ -55,6 +55,9 @@ const AddBlog = () => {
     onSubmit: (values) => {
       dispatch(addBlogs(values));
       formik.resetForm();
+      setTimeout(() => {
+        dispatch(resetState());
+      }, 3000);
     },
   });
 

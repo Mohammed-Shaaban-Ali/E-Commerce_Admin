@@ -11,7 +11,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { getcategory } from "../../redux/slices/categorySlice";
 import { getcolors } from "../../redux/slices/colorSlice";
 import { deleteImg, uploadImg } from "../../redux/slices/uploadSlice";
-import { addProduct } from "../../redux/slices/productSlice";
+import { addProduct, resetState } from "../../redux/slices/productSlice";
 import { toast } from "react-toastify";
 
 let userSchema = object().shape({
@@ -88,6 +88,9 @@ const AddProduct = () => {
       dispatch(addProduct(values));
       formik.resetForm();
       setColor(null);
+      setTimeout(() => {
+        dispatch(resetState());
+      }, 3000);
     },
   });
 

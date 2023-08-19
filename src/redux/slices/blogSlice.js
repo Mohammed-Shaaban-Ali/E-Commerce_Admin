@@ -1,4 +1,4 @@
-import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
+import { createAction, createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import blogsService from "../service/blogService";
 
 export const getblogs = createAsyncThunk("blogs/getblogs", async (thunkAPI) => {
@@ -19,16 +19,18 @@ export const addBlogs = createAsyncThunk(
     }
   }
 );
+export const resetState = createAction("Reset_all");
 
+const initialState = {
+  blogs: [],
+  isError: false,
+  isLoading: false,
+  isSuccess: false,
+  message: "",
+};
 const blogslice = createSlice({
   name: "blogs",
-  initialState: {
-    blogs: [],
-    isError: false,
-    isLoading: false,
-    isSuccess: false,
-    message: "",
-  },
+  initialState,
   reducers: {},
   extraReducers: (builder) => {
     builder
@@ -60,7 +62,8 @@ const blogslice = createSlice({
         state.isLoading = false;
         state.isSuccess = false;
         state.message = action.error;
-      });
+      })
+      .addCase(resetState, () => initialState);
   },
 });
 export default blogslice.reducer;
