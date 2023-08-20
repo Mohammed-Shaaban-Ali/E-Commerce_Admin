@@ -36,20 +36,28 @@ function App() {
           <Route index element={<Dashboard />} />
           <Route path="customes" element={<Customes />} />
           <Route path="enquiries" element={<Enquiries />} />
+
           <Route path="add-blog" element={<AddBlog />} />
           <Route path="blog-list" element={<BlogList />} />
           <Route path="add-blog-category" element={<AddBlogCategory />} />
           <Route path="blog-list-category" element={<BlogListCategories />} />
+
           <Route path="orders" element={<Order />} />
+
           <Route path="add-category" element={<AddCategory />} />
+          <Route path="edit-category" element={<AddCategory />} />
           <Route path="category-list" element={<CategoriesList />} />
+
           <Route path="add-product" element={<AddProduct />} />
           <Route path="product-list" element={<ProductList />} />
+
           <Route path="add-brand" element={<AddBrand />} />
           <Route path="edit-brand/:id" element={<AddBrand />} />
           <Route path="brand-list" element={<BrandList />} />
+
           <Route path="add-color" element={<AddColor />} />
           <Route path="color-list" element={<ColorList />} />
+
           <Route path="add-coupon" element={<AddCoupons />} />
           <Route path="coupon-list" element={<CouponsList />} />
         </Route>

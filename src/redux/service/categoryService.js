@@ -14,8 +14,28 @@ const addcategory = async (category) => {
   );
   return data;
 };
+
+const updateCategory = async (CategoryData) => {
+  const { id, Data } = CategoryData;
+  const { data } = await request.put(
+    `/api/product-category/${id}`,
+    Data,
+    ConfigToken
+  );
+  return data;
+};
+
+const deleteCategory = async (id) => {
+  const { data } = await request.delete(
+    `/api/product-category/${id}`,
+    ConfigToken
+  );
+  return data;
+};
 const categoriesService = {
   getcategory,
   addcategory,
+  updateCategory,
+  deleteCategory,
 };
 export default categoriesService;
