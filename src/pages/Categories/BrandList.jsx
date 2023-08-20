@@ -1,12 +1,20 @@
 import { Table } from "antd";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { Link } from "react-router-dom";
-import { getbrands, resetState } from "../../redux/slices/brandSlice";
+import {
+  deleteBrand,
+  getbrands,
+  resetState,
+} from "../../redux/slices/brandSlice";
 import { BiEdit } from "react-icons/bi";
 import { AiFillDelete } from "react-icons/ai";
+import CustomModal from "../../components/CustomModal";
 
 const BrandList = () => {
+  const [open, setOpen] = useState(false);
+  const [brandID, setbrandID] = useState("");
+
   const dispatch = useDispatch();
   const { brands, isError, isLoading, isSuccess, message } = useSelector(
     (state) => state.brands
@@ -19,7 +27,7 @@ const BrandList = () => {
   const columns = [
     {
       title: "SNo",
-      dataIndex: "Key",
+      dataIndex: "id",
     },
     {
       title: "Title",
@@ -33,7 +41,7 @@ const BrandList = () => {
   const data1 = [];
   for (let i = 0; i < brands.length; i++) {
     data1.push({
-      Key: i + 1,
+      id: i + 1,
       title: brands[i].title,
       action: (
         <div className="d-flex gap-4 fs-5">
@@ -45,7 +53,7 @@ const BrandList = () => {
           </Link>
           <Link
             style={{ color: "red" }}
-            to={`/admin/edit-brand/${brands[i]._id}`}
+            onClick={() => showModal(brands[i]._id)}
           >
             <AiFillDelete />
           </Link>
@@ -53,6 +61,21 @@ const BrandList = () => {
       ),
     });
   }
+
+  const showModal = (id) => {
+    setOpen(true);
+    setbrandID(id);
+  };
+  const handleOk = (e) => {
+    dispatch(deleteBrand(brandID));
+    setOpen(false);
+    setTimeout(() => {
+      dispatch(getbrands());
+    }, 100);
+  };
+  const handleCancel = (e) => {
+    setOpen(false);
+  };
   return (
     <div>
       <div className="mt-4">
@@ -61,6 +84,12 @@ const BrandList = () => {
           <Table columns={columns} dataSource={data1} />
         </div>
       </div>
+      <CustomModal
+        handleOk={handleOk}
+        handleCancel={handleCancel}
+        open={open}
+        title="Are you sure you want to delete this brand?"
+      />
     </div>
   );
 };

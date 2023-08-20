@@ -19,6 +19,7 @@ const getSingleBrand = async (id) => {
   const { data } = await request.get(`/api/brand-category/${id}`, ConfigToken);
   return data.title;
 };
+
 const updateBrand = async (brandData) => {
   const { id, Data } = brandData;
   const { data } = await request.put(
@@ -29,10 +30,19 @@ const updateBrand = async (brandData) => {
   return data;
 };
 
+const deleteBrand = async (id) => {
+  const { data } = await request.delete(
+    `/api/brand-category/${id}`,
+
+    ConfigToken
+  );
+  return data;
+};
 const brandsService = {
   getbrand,
   addBrand,
   getSingleBrand,
   updateBrand,
+  deleteBrand,
 };
 export default brandsService;
