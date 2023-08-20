@@ -58,7 +58,7 @@ const AddBrand = () => {
         dispatch(updateBrand(data));
         setTimeout(() => {
           navigate("/admin/brand-list");
-        }, 2000);
+        }, 1000);
       } else {
         dispatch(addBrand(values));
         formik.resetForm();
