@@ -43,7 +43,16 @@ const ColorList = () => {
   for (let i = 0; i < colors.length; i++) {
     data1.push({
       Key: i + 1,
-      title: colors[i].title,
+      title: (
+        <div
+          style={{
+            width: "25px",
+            height: "25px",
+            borderRadius: "50%",
+            backgroundColor: `${colors[i].title}`,
+          }}
+        ></div>
+      ),
       action: (
         <div className="d-flex gap-4 fs-5">
           <Link
