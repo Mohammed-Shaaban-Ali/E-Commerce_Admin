@@ -33,7 +33,6 @@ const updateBrand = async (brandData) => {
 const deleteBrand = async (id) => {
   const { data } = await request.delete(
     `/api/brand-category/${id}`,
-
     ConfigToken
   );
   return data;
