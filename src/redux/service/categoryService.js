@@ -14,7 +14,13 @@ const addcategory = async (category) => {
   );
   return data;
 };
-
+const getSinglecategory = async (id) => {
+  const { data } = await request.get(
+    `/api/product-category/${id}`,
+    ConfigToken
+  );
+  return data.title;
+};
 const updateCategory = async (CategoryData) => {
   const { id, Data } = CategoryData;
   const { data } = await request.put(
@@ -35,6 +41,7 @@ const deleteCategory = async (id) => {
 const categoriesService = {
   getcategory,
   addcategory,
+  getSinglecategory,
   updateCategory,
   deleteCategory,
 };

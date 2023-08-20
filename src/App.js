@@ -45,7 +45,7 @@ function App() {
           <Route path="orders" element={<Order />} />
 
           <Route path="add-category" element={<AddCategory />} />
-          <Route path="edit-category" element={<AddCategory />} />
+          <Route path="edit-category/:id" element={<AddCategory />} />
           <Route path="category-list" element={<CategoriesList />} />
 
           <Route path="add-product" element={<AddProduct />} />

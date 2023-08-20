@@ -10,6 +10,7 @@ import {
 import { BiEdit } from "react-icons/bi";
 import { AiFillDelete } from "react-icons/ai";
 import CustomModal from "../../components/CustomModal";
+import { toast } from "react-toastify";
 
 const BrandList = () => {
   const [open, setOpen] = useState(false);
@@ -69,6 +70,8 @@ const BrandList = () => {
   const handleOk = (e) => {
     dispatch(deleteBrand(brandID));
     setOpen(false);
+    toast.success("Brand deleted successfully");
+
     setTimeout(() => {
       dispatch(getbrands());
     }, 100);

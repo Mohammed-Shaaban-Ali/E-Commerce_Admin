@@ -10,6 +10,7 @@ import {
   resetState,
 } from "../../redux/slices/categorySlice";
 import CustomModal from "../../components/CustomModal";
+import { toast } from "react-toastify";
 const CategoriesList = () => {
   const [open, setOpen] = useState(false);
   const [categoryID, setcategoryID] = useState("");
@@ -23,6 +24,7 @@ const CategoriesList = () => {
     dispatch(resetState());
     dispatch(getcategory());
   }, []);
+
   const columns = [
     {
       title: "SNo",
@@ -67,6 +69,7 @@ const CategoriesList = () => {
   const handleOk = (e) => {
     dispatch(deleteCategory(categoryID));
     setOpen(false);
+    toast.success("Category deleted successfully");
     setTimeout(() => {
       dispatch(getcategory());
     }, 100);
