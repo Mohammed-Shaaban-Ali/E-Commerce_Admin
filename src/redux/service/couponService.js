@@ -10,8 +10,27 @@ const addCuopons = async (color) => {
   return data;
 };
 
+const getSingleCoupon = async (id) => {
+  const { data } = await request.get(`/api/coupon/${id}`, ConfigToken);
+  return data;
+};
+
+const updateCoupon = async (CouponData) => {
+  const { id, Data } = CouponData;
+  const { data } = await request.put(`/api/coupon/${id}`, Data, ConfigToken);
+  return data;
+};
+
+const deleteCoupon = async (id) => {
+  const { data } = await request.delete(`/api/coupon/${id}`, ConfigToken);
+  return data;
+};
+
 const couponService = {
   getCuopons,
   addCuopons,
+  getSingleCoupon,
+  updateCoupon,
+  deleteCoupon,
 };
 export default couponService;

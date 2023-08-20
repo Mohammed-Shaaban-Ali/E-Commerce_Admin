@@ -1,17 +1,30 @@
-import { Table } from "antd";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
+import { Table } from "antd";
 import { Link } from "react-router-dom";
 import { BiEdit } from "react-icons/bi";
 import { AiFillDelete } from "react-icons/ai";
-import { getCuopons } from "../../redux/slices/couponSlice";
+import {
+  deletecoupon,
+  getCuopons,
+  resetState,
+} from "../../redux/slices/couponSlice";
+import { toast } from "react-toastify";
+import CustomModal from "../../components/CustomModal";
 
 const CouponsList = () => {
+  const [open, setOpen] = useState(false);
+  const [couponID, setcouponID] = useState("");
+
   const dispatch = useDispatch();
-  const { coupons } = useSelector((state) => state.coupons);
+  const { coupons, couponName, couponDiscount, couponExpiry } = useSelector(
+    (state) => state.coupons
+  );
   useEffect(() => {
+    dispatch(resetState());
     dispatch(getCuopons());
   }, []);
+
   // Table
   const columns = [
     {
@@ -45,16 +58,37 @@ const CouponsList = () => {
       expiry: new Date(coupons[i].expiry).toLocaleString(),
       action: (
         <div className="d-flex gap-4 fs-5">
-          <Link style={{ color: "green" }} to="/1">
+          <Link
+            style={{ color: "green" }}
+            to={`/admin/edit-coupon/${coupons[i]._id}`}
+          >
             <BiEdit />
           </Link>
-          <Link style={{ color: "red" }} to="/2">
+          <Link
+            style={{ color: "red" }}
+            onClick={() => showModal(coupons[i]._id)}
+          >
             <AiFillDelete />
           </Link>
         </div>
       ),
     });
   }
+  const showModal = (id) => {
+    setOpen(true);
+    setcouponID(id);
+  };
+  const handleOk = (e) => {
+    dispatch(deletecoupon(couponID));
+    setOpen(false);
+    toast.success("coupon deleted successfully");
+    setTimeout(() => {
+      dispatch(getCuopons());
+    }, 100);
+  };
+  const handleCancel = (e) => {
+    setOpen(false);
+  };
   return (
     <div>
       <div className="mt-4">
@@ -63,6 +97,12 @@ const CouponsList = () => {
           <Table columns={columns} dataSource={data1} />
         </div>
       </div>
+      <CustomModal
+        handleOk={handleOk}
+        handleCancel={handleCancel}
+        open={open}
+        title="Are you sure you want to delete this Coupon?"
+      />
     </div>
   );
 };

@@ -60,6 +60,7 @@ function App() {
           <Route path="color-list" element={<ColorList />} />
 
           <Route path="add-coupon" element={<AddCoupons />} />
+          <Route path="edit-coupon/:id" element={<AddCoupons />} />
           <Route path="coupon-list" element={<CouponsList />} />
         </Route>
       </Routes>
