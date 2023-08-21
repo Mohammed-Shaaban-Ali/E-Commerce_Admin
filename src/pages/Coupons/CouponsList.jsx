@@ -17,9 +17,7 @@ const CouponsList = () => {
   const [couponID, setcouponID] = useState("");
 
   const dispatch = useDispatch();
-  const { coupons, couponName, couponDiscount, couponExpiry } = useSelector(
-    (state) => state.coupons
-  );
+  const { coupons } = useSelector((state) => state.coupons);
   useEffect(() => {
     dispatch(resetState());
     dispatch(getCuopons());
