@@ -6,10 +6,15 @@ import Dropzone from "react-dropzone";
 import { useFormik } from "formik";
 import { object, string } from "yup";
 import { useDispatch, useSelector } from "react-redux";
-import { getcategory } from "../../redux/slices/categorySlice";
 import { deleteImg, uploadImg } from "../../redux/slices/uploadSlice";
 import { toast } from "react-toastify";
-import { addBlogs, resetState } from "../../redux/slices/blogSlice";
+import {
+  addBlogs,
+  getSingleBlog,
+  resetState,
+} from "../../redux/slices/blogSlice";
+import { useLocation, useNavigate } from "react-router-dom";
+import { getblogCategory } from "../../redux/slices/blogCategorySlice";
 
 let userSchema = object().shape({
   title: string().required(),
@@ -17,15 +22,25 @@ let userSchema = object().shape({
   category: string().required(),
 });
 const AddBlog = () => {
+  const location = useLocation();
+  const navigate = useNavigate();
+  const blogId = location.pathname.split("/")[3];
+
   const dispatch = useDispatch();
-  const { categories } = useSelector((state) => state.productCategory);
+  const { blogCategory } = useSelector((state) => state.blogCategory);
   const { images } = useSelector((state) => state.upload);
   const { isError, isLoading, isSuccess, createdBlog } = useSelector(
     (state) => state.blogs
   );
-
   useEffect(() => {
-    dispatch(getcategory());
+    if (blogId !== undefined) {
+      dispatch(getSingleBlog(blogId));
+    } else {
+      dispatch(resetState());
+    }
+  }, []);
+  useEffect(() => {
+    dispatch(getblogCategory());
   }, [images]);
 
   useEffect(() => {
@@ -97,7 +112,7 @@ const AddBlog = () => {
               <option disabled value="">
                 Select category
               </option>
-              {categories?.map((i, indx) => (
+              {blogCategory?.map((i, indx) => (
                 <option key={indx} value={i.title}>
                   {i.title}
                 </option>
