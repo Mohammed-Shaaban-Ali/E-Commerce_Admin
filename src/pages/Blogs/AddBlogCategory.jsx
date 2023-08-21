@@ -8,6 +8,7 @@ import {
   addBlogcategory,
   getSingleBlogCategory,
   resetState,
+  updateBlogCategory,
 } from "../../redux/slices/blogCategorySlice";
 import { useLocation, useNavigate } from "react-router-dom";
 
@@ -47,16 +48,25 @@ const AddBlogCategory = () => {
   }, [isError, isLoading, isSuccess]);
 
   const formik = useFormik({
+    enableReinitialize: true,
     initialValues: {
-      title: "",
+      title: singleblogCategorydata || "",
     },
     validationSchema: userSchema,
     onSubmit: (values) => {
-      dispatch(addBlogcategory(values));
-      formik.resetForm();
-      setTimeout(() => {
-        dispatch(resetState());
-      }, 3000);
+      if (blogCategoryId !== undefined) {
+        const data = { id: blogCategoryId, Data: values };
+        dispatch(updateBlogCategory(data));
+        setTimeout(() => {
+          navigate("/admin/blog-list-category");
+        }, 1000);
+      } else {
+        dispatch(addBlogcategory(values));
+        formik.resetForm();
+        setTimeout(() => {
+          dispatch(resetState());
+        }, 3000);
+      }
     },
   });
   return (
