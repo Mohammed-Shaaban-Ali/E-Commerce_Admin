@@ -7,6 +7,7 @@ import {
   deleteEnquiry,
   getenquiries,
   resetState,
+  updateEnquiry,
 } from "../../redux/slices/enquirySlice";
 import CustomModal from "../../components/CustomModal";
 import { toast } from "react-toastify";
@@ -59,8 +60,19 @@ const Enquiries = () => {
       mobile: enquiries[i].mobile,
       status: (
         <>
-          <select name="" className="form-control form-select" id="">
-            <option value="">set value</option>
+          <select
+            name="Status"
+            className="form-control form-select"
+            defaultValue={
+              enquiries[i].status ? enquiries[i].status : "Summitted"
+            }
+            onChange={(e) => setupdateStatus(e.target.value, enquiries[i]._id)}
+            id="Status"
+          >
+            <option value="Summitted">Summitted</option>
+            <option value="Contacted">Contacted</option>
+            <option value="In Progress">In Progress</option>
+            <option value="Resolved">Resolved</option>
           </select>
         </>
       ),
@@ -97,6 +109,17 @@ const Enquiries = () => {
   };
   const handleCancel = (e) => {
     setOpen(false);
+  };
+
+  const setupdateStatus = (e, id) => {
+    const data = {
+      id: id,
+      Data: {
+        status: e,
+      },
+    };
+    dispatch(updateEnquiry(data));
+    toast.success("Enquiry Status Update successfully");
   };
   return (
     <div>

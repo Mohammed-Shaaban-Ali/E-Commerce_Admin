@@ -17,6 +17,8 @@ const getsingleEnquiry = async (id) => {
 };
 const updateEnquiry = async (EnquiryData) => {
   const { id, Data } = EnquiryData;
+  console.log(Data);
+
   const { data } = await request.put(`/api/enquiry/${id}`, Data, ConfigToken);
   return data;
 };
