@@ -23,6 +23,7 @@ import AddBrand from "./pages/Categories/AddBrand";
 import AddProduct from "./pages/Categories/AddProduct";
 import CouponsList from "./pages/Coupons/CouponsList";
 import AddCoupons from "./pages/Coupons/AddCoupons";
+import EditEnquiries from "./pages/Enquiries/EditEnquiries";
 
 function App() {
   return (
@@ -35,7 +36,9 @@ function App() {
         <Route path="/admin" element={<MainLayout />}>
           <Route index element={<Dashboard />} />
           <Route path="customes" element={<Customes />} />
+
           <Route path="enquiries" element={<Enquiries />} />
+          <Route path="edit-enquiries/:id" element={<EditEnquiries />} />
 
           <Route path="add-blog" element={<AddBlog />} />
           <Route path="edit-blog/:id" element={<AddBlog />} />

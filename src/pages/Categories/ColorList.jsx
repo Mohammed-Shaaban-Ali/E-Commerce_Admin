@@ -80,7 +80,6 @@ const ColorList = () => {
     dispatch(deletecolor(colorID));
     setOpen(false);
     toast.success("Color deleted successfully");
-
     setTimeout(() => {
       dispatch(getcolors());
     }, 100);

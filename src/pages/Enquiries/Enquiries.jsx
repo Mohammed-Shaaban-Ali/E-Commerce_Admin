@@ -1,17 +1,25 @@
 import { Table } from "antd";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { Link } from "react-router-dom";
-import { BiEdit } from "react-icons/bi";
-import { AiFillDelete } from "react-icons/ai";
-import { getenquiries } from "../../redux/slices/enquirySlice";
+import { AiFillDelete, AiOutlineEye } from "react-icons/ai";
+import {
+  deleteEnquiry,
+  getenquiries,
+  resetState,
+} from "../../redux/slices/enquirySlice";
+import CustomModal from "../../components/CustomModal";
+import { toast } from "react-toastify";
 
 const Enquiries = () => {
+  const [open, setOpen] = useState(false);
+  const [enqID, setenqID] = useState("");
   const dispatch = useDispatch();
   const { enquiries, isError, isLoading, isSuccess, message } = useSelector(
     (state) => state.enquiries
   );
   useEffect(() => {
+    dispatch(resetState());
     dispatch(getenquiries());
   }, []);
   // Table
@@ -29,13 +37,14 @@ const Enquiries = () => {
       dataIndex: "email",
     },
     {
-      title: "Status",
-      dataIndex: "status",
-    },
-    {
       title: "Mobile",
       dataIndex: "mobile",
     },
+    {
+      title: "Status",
+      dataIndex: "status",
+    },
+
     {
       title: "Action",
       dataIndex: "action",
@@ -57,13 +66,38 @@ const Enquiries = () => {
       ),
       action: (
         <div className="d-flex gap-4 fs-5">
-          <Link style={{ color: "red" }} to="/2">
+          <Link
+            style={{ color: "red" }}
+            onClick={() => showModal(enquiries[i]._id)}
+          >
             <AiFillDelete />
+          </Link>
+          <Link
+            style={{ color: "green" }}
+            to={`/admin/edit-enquiries/${enquiries[i]._id}`}
+          >
+            <AiOutlineEye />
           </Link>
         </div>
       ),
     });
   }
+  const showModal = (id) => {
+    setOpen(true);
+    setenqID(id);
+  };
+  const handleOk = (e) => {
+    dispatch(deleteEnquiry(enqID));
+    setOpen(false);
+    toast.success("Enquiry deleted successfully");
+
+    setTimeout(() => {
+      dispatch(getenquiries());
+    }, 100);
+  };
+  const handleCancel = (e) => {
+    setOpen(false);
+  };
   return (
     <div>
       <div className="mt-4">
@@ -72,6 +106,12 @@ const Enquiries = () => {
           <Table columns={columns} dataSource={data1} />
         </div>
       </div>
+      <CustomModal
+        handleOk={handleOk}
+        handleCancel={handleCancel}
+        open={open}
+        title="Are you sure you want to delete this Enquiry?"
+      />
     </div>
   );
 };
