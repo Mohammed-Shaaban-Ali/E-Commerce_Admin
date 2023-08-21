@@ -6,24 +6,43 @@ import { toast } from "react-toastify";
 import { useFormik } from "formik";
 import {
   addBlogcategory,
+  getSingleBlogCategory,
   resetState,
 } from "../../redux/slices/blogCategorySlice";
+import { useLocation, useNavigate } from "react-router-dom";
 
 let userSchema = object().shape({
   title: string().required("Blog Category Name is required"),
 });
 
 const AddBlogCategory = () => {
+  const location = useLocation();
+  const navigate = useNavigate();
+  const blogCategoryId = location.pathname.split("/")[3];
+
   const dispatch = useDispatch();
 
-  const { isError, isLoading, isSuccess, createdBlogcategory } = useSelector(
-    (state) => state.blogCategory
-  );
+  const {
+    isError,
+    isLoading,
+    isSuccess,
+    createdBlogcategory,
+    singleblogCategorydata,
+    updateBLogCategorydData,
+  } = useSelector((state) => state.blogCategory);
 
+  useEffect(() => {
+    if (blogCategoryId !== undefined) {
+      dispatch(getSingleBlogCategory(blogCategoryId));
+    } else {
+      dispatch(resetState());
+    }
+  }, []);
   useEffect(() => {
     if (isSuccess && createdBlogcategory)
       toast.success("Blog category added successfully");
-
+    if (isSuccess && updateBLogCategorydData)
+      toast.success("Blog category updated successfully");
     if (isError) toast.error("some thing went wrong");
   }, [isError, isLoading, isSuccess]);
 
