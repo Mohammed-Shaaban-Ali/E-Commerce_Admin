@@ -1,17 +1,28 @@
 import { Table } from "antd";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { Link } from "react-router-dom";
 import { BiEdit } from "react-icons/bi";
 import { AiFillDelete } from "react-icons/ai";
-import { getblogCategory } from "../../redux/slices/blogCategorySlice";
+import {
+  deleteBlogCategory,
+  getblogCategory,
+  resetState,
+} from "../../redux/slices/blogCategorySlice";
+import CustomModal from "../../components/CustomModal";
+import { toast } from "react-toastify";
 
 const BlogListCategories = () => {
+  const [open, setOpen] = useState(false);
+  const [blogCategoryID, setblogCategoryID] = useState("");
+
   const dispatch = useDispatch();
   const { blogCategory, isError, isLoading, isSuccess, message } = useSelector(
     (state) => state.blogCategory
   );
   useEffect(() => {
+    dispatch(resetState());
+
     dispatch(getblogCategory());
   }, []);
   const columns = [
@@ -36,16 +47,38 @@ const BlogListCategories = () => {
       title: blogCategory[i].title,
       action: (
         <div className="d-flex gap-4 fs-5">
-          <Link style={{ color: "green" }} to="/1">
+          <Link
+            style={{ color: "green" }}
+            to={`/admin/edit-blog-category/${blogCategory[i]._id}`}
+          >
             <BiEdit />
           </Link>
-          <Link style={{ color: "red" }} to="/2">
+          <Link
+            style={{ color: "red" }}
+            onClick={() => showModal(blogCategory[i]._id)}
+          >
             <AiFillDelete />
           </Link>
         </div>
       ),
     });
   }
+  const showModal = (id) => {
+    setOpen(true);
+    setblogCategoryID(id);
+  };
+  const handleOk = (e) => {
+    dispatch(deleteBlogCategory(blogCategoryID));
+    setOpen(false);
+    toast.success("Blog Category deleted successfully");
+
+    setTimeout(() => {
+      dispatch(getblogCategory());
+    }, 100);
+  };
+  const handleCancel = (e) => {
+    setOpen(false);
+  };
   return (
     <div>
       <div className="mt-4">
@@ -54,6 +87,12 @@ const BlogListCategories = () => {
           <Table columns={columns} dataSource={data1} />
         </div>
       </div>
+      <CustomModal
+        handleOk={handleOk}
+        handleCancel={handleCancel}
+        open={open}
+        title="Are you sure you want to delete this blog category?"
+      />
     </div>
   );
 };

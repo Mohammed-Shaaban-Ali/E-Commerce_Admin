@@ -1,22 +1,21 @@
 import { createAction, createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import brandsService from "../service/brandsService";
 
-export const getbrands = createAsyncThunk(
-  "brand/getbrands",
-  async (thunkAPI) => {
-    try {
-      return await brandsService.getbrand();
-    } catch (error) {
-      return thunkAPI.rejectWithValue(error);
-    }
-  }
-);
-
 export const addBrand = createAsyncThunk(
   "brand/addBrand",
   async (brand, thunkAPI) => {
     try {
       return await brandsService.addBrand(brand);
+    } catch (error) {
+      return thunkAPI.rejectWithValue(error);
+    }
+  }
+);
+export const getbrands = createAsyncThunk(
+  "brand/getbrands",
+  async (thunkAPI) => {
+    try {
+      return await brandsService.getbrand();
     } catch (error) {
       return thunkAPI.rejectWithValue(error);
     }

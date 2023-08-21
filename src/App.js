@@ -40,6 +40,7 @@ function App() {
           <Route path="add-blog" element={<AddBlog />} />
           <Route path="blog-list" element={<BlogList />} />
           <Route path="add-blog-category" element={<AddBlogCategory />} />
+          <Route path="edit-blog-category/:id" element={<AddBlogCategory />} />
           <Route path="blog-list-category" element={<BlogListCategories />} />
 
           <Route path="orders" element={<Order />} />
