@@ -32,13 +32,13 @@ const AddBlog = () => {
   const { isError, isLoading, isSuccess, createdBlog } = useSelector(
     (state) => state.blogs
   );
-  useEffect(() => {
-    if (blogId !== undefined) {
-      dispatch(getSingleBlog(blogId));
-    } else {
-      dispatch(resetState());
-    }
-  }, []);
+  // useEffect(() => {
+  //   if (blogId !== undefined) {
+  //     dispatch(getSingleBlog(blogId));
+  //   } else {
+  //     dispatch(resetState());
+  //   }
+  // }, []);
   useEffect(() => {
     dispatch(getblogCategory());
   }, [images]);
@@ -167,7 +167,10 @@ const AddBlog = () => {
                 </div>
               ))}
             </div>
-            <button className="btn btn-success border-0 rounded-3 my-4">
+            <button
+              type="submit"
+              className="btn btn-success border-0 rounded-3 my-4"
+            >
               Add Blog
             </button>
           </form>

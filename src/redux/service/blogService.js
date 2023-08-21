@@ -17,7 +17,16 @@ const getSingleBlog = async (id) => {
 
 const updateblog = async (blogData) => {
   const { id, Data } = blogData;
-  const { data } = await request.put(`/api/blog/${id}`, Data, ConfigToken);
+  const { data } = await request.put(
+    `/api/blog/${id}`,
+    {
+      title: Data.title,
+      description: Data.description,
+      category: Data.category,
+      images: Data.images,
+    },
+    ConfigToken
+  );
   return data;
 };
 

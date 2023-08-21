@@ -100,7 +100,10 @@ const blogslice = createSlice({
       .addCase(getSingleBlog.fulfilled, (state, action) => {
         state.isLoading = false;
         state.isSuccess = true;
-        state.singlebrand = action.payload;
+        state.singleblogTitle = action.payload.title;
+        state.singleblogCategory = action.payload.category;
+        state.singleblogDescription = action.payload.description;
+        state.singleblogImage = action.payload.images;
       })
       .addCase(getSingleBlog.rejected, (state, action) => {
         state.isError = true;
