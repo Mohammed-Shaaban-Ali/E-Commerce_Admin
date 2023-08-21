@@ -20,6 +20,7 @@ const AddBrand = () => {
   const location = useLocation();
   const navigate = useNavigate();
   const brandId = location.pathname.split("/")[3];
+
   const dispatch = useDispatch();
 
   const {
