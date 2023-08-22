@@ -16,6 +16,14 @@ const getOrders = async () => {
     console.error(error);
   }
 };
+const getOrderbyid = async (id) => {
+  try {
+    const { data } = await request.get(`/api/user/cart/getorderbyid/${id}`);
+    return data;
+  } catch (error) {
+    console.error(error);
+  }
+};
 
 const authService = {
   login,
