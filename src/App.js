@@ -24,6 +24,7 @@ import AddProduct from "./pages/Categories/AddProduct";
 import CouponsList from "./pages/Coupons/CouponsList";
 import AddCoupons from "./pages/Coupons/AddCoupons";
 import EditEnquiries from "./pages/Enquiries/EditEnquiries";
+import ViewOrder from "./pages/Order/ViewOrder";
 
 function App() {
   return (
@@ -48,6 +49,7 @@ function App() {
           <Route path="blog-list-category" element={<BlogListCategories />} />
 
           <Route path="orders" element={<Order />} />
+          <Route path="view-order/:id" element={<ViewOrder />} />
 
           <Route path="add-category" element={<AddCategory />} />
           <Route path="edit-category/:id" element={<AddCategory />} />

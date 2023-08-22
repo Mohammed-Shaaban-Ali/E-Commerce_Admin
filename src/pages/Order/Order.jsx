@@ -40,17 +40,19 @@ const Order = () => {
     },
   ];
   const data1 = [];
-  for (let i = 0; i < orders.length; i++) {
+  for (let i = 0; i < orders?.length; i++) {
     data1.push({
       Key: i + 1,
       name: orders[i].orderBy.firstName + " " + orders[i].orderBy.lastName,
       Product: orders[i].products?.map((i) => {
         return (
           <>
-            <ul>
-              <li>
-                <p>{i.product?.title}</p>
-              </li>
+            <ul key={i}>
+              <p>
+                <Link to={`/admin/view-order/${i.product._id}`}>
+                  {i.product?.title}
+                </Link>
+              </p>
             </ul>
           </>
         );
@@ -58,8 +60,8 @@ const Order = () => {
       price: orders[i].products?.map((i) => {
         return (
           <>
-            <ul>
-              <li>
+            <ul key={i}>
+              <li key={i}>
                 <p>{i.product?.price}</p>
               </li>
             </ul>
