@@ -34,7 +34,7 @@ const AddProduct = () => {
   const { brands } = useSelector((state) => state.brands);
   const { categories } = useSelector((state) => state.productCategory);
   const { colors } = useSelector((state) => state.colors);
-  const { images } = useSelector((state) => state.upload);
+  const img = useSelector((state) => state.upload.images);
   const { isError, isLoading, isSuccess, createdProduct } = useSelector(
     (state) => state.products
   );
@@ -43,7 +43,7 @@ const AddProduct = () => {
     dispatch(getbrands());
     dispatch(getcategory());
     dispatch(getcolors());
-  }, [images]);
+  }, [img]);
 
   useEffect(() => {
     if (isSuccess && createdProduct)
@@ -60,7 +60,7 @@ const AddProduct = () => {
     });
   });
   const imagesData = [];
-  images?.forEach((element) => {
+  img?.forEach((element) => {
     imagesData.push({
       public_id: element.public_id,
       url: element.url,
@@ -85,6 +85,7 @@ const AddProduct = () => {
     },
     validationSchema: userSchema,
     onSubmit: (values) => {
+      console.log(values);
       dispatch(addProduct(values));
       formik.resetForm();
       setColor(null);
@@ -252,7 +253,7 @@ const AddProduct = () => {
               </Dropzone>
             </div>
             <div className="showImages d-flex flex-wrap gap-3">
-              {images?.map((img, index) => (
+              {img?.map((img, index) => (
                 <div className="position-relative" key={index}>
                   <button
                     className="btn-close position-absolute"

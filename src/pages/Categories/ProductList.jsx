@@ -13,7 +13,7 @@ const ProductList = () => {
   );
   useEffect(() => {
     dispatch(getProducts());
-  }, [products, isError, isLoading, isSuccess, message]);
+  }, []);
 
   // Table
   const columns = [
