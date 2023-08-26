@@ -21,7 +21,7 @@ let userSchema = object().shape({
   quantity: number().required(),
   brand: string().required(),
   category: string().required(),
-  tages: string().required(),
+  tags: string().required(),
   color: array()
     .min(1, "Pick at least one color")
     .required("Color is Required"),
@@ -34,7 +34,7 @@ const AddProduct = () => {
   const { brands } = useSelector((state) => state.brands);
   const { categories } = useSelector((state) => state.productCategory);
   const { colors } = useSelector((state) => state.colors);
-  const { images } = useSelector((state) => state.upload);
+  const img = useSelector((state) => state.upload.images);
   const { isError, isLoading, isSuccess, createdProduct } = useSelector(
     (state) => state.products
   );
@@ -43,7 +43,7 @@ const AddProduct = () => {
     dispatch(getbrands());
     dispatch(getcategory());
     dispatch(getcolors());
-  }, [images]);
+  }, [img]);
 
   useEffect(() => {
     if (isSuccess && createdProduct)
@@ -56,11 +56,11 @@ const AddProduct = () => {
   colors.forEach((i) => {
     coloropt.push({
       label: i.title,
-      value: i._id,
+      value: i.title,
     });
   });
   const imagesData = [];
-  images?.forEach((element) => {
+  img?.forEach((element) => {
     imagesData.push({
       public_id: element.public_id,
       url: element.url,
@@ -78,13 +78,14 @@ const AddProduct = () => {
       price: "",
       brand: "",
       category: "",
-      tages: "",
+      tags: "",
       quantity: "",
       color: "",
       images: "",
     },
     validationSchema: userSchema,
     onSubmit: (values) => {
+      console.log(values);
       dispatch(addProduct(values));
       formik.resetForm();
       setColor(null);
@@ -192,21 +193,21 @@ const AddProduct = () => {
 
             <select
               className="form-control py-2 "
-              name="tages"
-              id="tages"
-              onChange={formik.handleChange("tages")}
-              value={formik.values.tages}
+              name="tags"
+              id="tags"
+              onChange={formik.handleChange("tags")}
+              value={formik.values.tags}
             >
               <option disabled value="">
-                Select category
+                Select tags
               </option>
               <option value="featured">Featured</option>
               <option value="popular">Popular</option>
               <option value="special">Special</option>
             </select>
             <div className="error">
-              {formik.touched.tages && formik.errors.tages ? (
-                <div>{formik.errors.tages}</div>
+              {formik.touched.tags && formik.errors.tags ? (
+                <div>{formik.errors.tags}</div>
               ) : null}
             </div>
 
@@ -252,7 +253,7 @@ const AddProduct = () => {
               </Dropzone>
             </div>
             <div className="showImages d-flex flex-wrap gap-3">
-              {images?.map((img, index) => (
+              {img?.map((img, index) => (
                 <div className="position-relative" key={index}>
                   <button
                     className="btn-close position-absolute"

@@ -85,6 +85,7 @@ const Login = () => {
 
           <button
             style={{ background: "gray" }}
+            type="submit"
             className="border-0 px-3 py-2 text-center text-white fw-bold w-100 text-white text-decoration-none"
           >
             Login
