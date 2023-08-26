@@ -2,11 +2,16 @@ import { Table } from "antd";
 import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { Link } from "react-router-dom";
-import { getProducts } from "../../redux/slices/productSlice";
+import { deleteProduct, getProducts } from "../../redux/slices/productSlice";
 import { BiEdit } from "react-icons/bi";
 import { AiFillDelete } from "react-icons/ai";
+import { useState } from "react";
+import { toast } from "react-toastify";
+import CustomModal from "../../components/CustomModal";
 
 const ProductList = () => {
+  const [open, setOpen] = useState(false);
+  const [colorID, setcolorID] = useState("");
   const dispatch = useDispatch();
   const { products, isError, isLoading, isSuccess, message } = useSelector(
     (state) => state.products
@@ -14,7 +19,6 @@ const ProductList = () => {
   useEffect(() => {
     dispatch(getProducts());
   }, []);
-
   // Table
   const columns = [
     {
@@ -55,20 +59,47 @@ const ProductList = () => {
       title: products[i].title,
       brand: products[i].brand,
       category: products[i].category,
-      color: products[i].color[0].color,
+      color: (
+        <div
+          style={{
+            width: "25px",
+            height: "25px",
+            borderRadius: "50%",
+            backgroundColor: products[i].color[0],
+          }}
+        ></div>
+      ),
       price: products[i].price,
       action: (
         <div className="d-flex gap-4 fs-5">
           <Link style={{ color: "green" }} to="/1">
             <BiEdit />
           </Link>
-          <Link style={{ color: "red" }} to="/2">
+          <Link
+            style={{ color: "red" }}
+            onClick={() => showModal(products[i]._id)}
+          >
             <AiFillDelete />
           </Link>
         </div>
       ),
     });
   }
+  const showModal = (id) => {
+    setOpen(true);
+    setcolorID(id);
+  };
+  const handleOk = (e) => {
+    dispatch(deleteProduct(colorID));
+    setOpen(false);
+    toast.success("Color deleted successfully");
+    setTimeout(() => {
+      dispatch(getProducts());
+    }, 100);
+  };
+  const handleCancel = (e) => {
+    setOpen(false);
+  };
   return (
     <div>
       <div className="mt-4">
@@ -77,6 +108,12 @@ const ProductList = () => {
           <Table columns={columns} dataSource={data1} />
         </div>
       </div>
+      <CustomModal
+        handleOk={handleOk}
+        handleCancel={handleCancel}
+        open={open}
+        title="Are you sure you want to delete this product?"
+      />
     </div>
   );
 };

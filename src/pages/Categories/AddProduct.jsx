@@ -21,7 +21,7 @@ let userSchema = object().shape({
   quantity: number().required(),
   brand: string().required(),
   category: string().required(),
-  tages: string().required(),
+  tags: string().required(),
   color: array()
     .min(1, "Pick at least one color")
     .required("Color is Required"),
@@ -56,7 +56,7 @@ const AddProduct = () => {
   colors.forEach((i) => {
     coloropt.push({
       label: i.title,
-      value: i._id,
+      value: i.title,
     });
   });
   const imagesData = [];
@@ -78,7 +78,7 @@ const AddProduct = () => {
       price: "",
       brand: "",
       category: "",
-      tages: "",
+      tags: "",
       quantity: "",
       color: "",
       images: "",
@@ -193,21 +193,21 @@ const AddProduct = () => {
 
             <select
               className="form-control py-2 "
-              name="tages"
-              id="tages"
-              onChange={formik.handleChange("tages")}
-              value={formik.values.tages}
+              name="tags"
+              id="tags"
+              onChange={formik.handleChange("tags")}
+              value={formik.values.tags}
             >
               <option disabled value="">
-                Select category
+                Select tags
               </option>
               <option value="featured">Featured</option>
               <option value="popular">Popular</option>
               <option value="special">Special</option>
             </select>
             <div className="error">
-              {formik.touched.tages && formik.errors.tages ? (
-                <div>{formik.errors.tages}</div>
+              {formik.touched.tags && formik.errors.tags ? (
+                <div>{formik.errors.tags}</div>
               ) : null}
             </div>
 
