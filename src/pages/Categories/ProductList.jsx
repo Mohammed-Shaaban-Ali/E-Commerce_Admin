@@ -65,7 +65,7 @@ const ProductList = () => {
             width: "25px",
             height: "25px",
             borderRadius: "50%",
-            backgroundColor: products[i].color[0],
+            // backgroundColor: products[i].color[0],
           }}
         ></div>
       ),
