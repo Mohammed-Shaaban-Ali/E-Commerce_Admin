@@ -56,7 +56,7 @@ const AddProduct = () => {
   colors.forEach((i) => {
     coloropt.push({
       label: i.title,
-      value: i.title,
+      value: i._id,
     });
   });
   const imagesData = [];
