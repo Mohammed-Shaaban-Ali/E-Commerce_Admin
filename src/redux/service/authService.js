@@ -1,5 +1,5 @@
 import request from "../../utils/request";
-
+import { ConfigToken } from "../../utils/validateToken";
 const login = async (userData) => {
   const { data } = await request.post("/api/user/login", userData);
   if (data) {
@@ -16,9 +16,13 @@ const getOrders = async () => {
     console.error(error);
   }
 };
-const getOrderbyid = async (id) => {
+
+const getMonthWiseOrderIncom = async () => {
   try {
-    const { data } = await request.get(`/api/user/cart/getorderbyid/${id}`);
+    const { data } = await request.get(
+      "/api/user/getMonthWiseOrderIncom",
+      ConfigToken
+    );
     return data;
   } catch (error) {
     console.error(error);
@@ -28,5 +32,6 @@ const getOrderbyid = async (id) => {
 const authService = {
   login,
   getOrders,
+  getMonthWiseOrderIncom,
 };
 export default authService;
