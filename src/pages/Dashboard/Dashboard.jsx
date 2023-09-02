@@ -1,63 +1,84 @@
 import "./Dashboard.css";
 import { Column } from "@ant-design/plots";
 import { Table } from "antd";
-
+import { useEffect, useState } from "react";
 import { FaArrowTrendUp, FaArrowTrendDown } from "react-icons/fa6";
+import { useDispatch, useSelector } from "react-redux";
+import { getMonthWiseOrderIncom } from "../../redux/slices/authSlice";
 
 const Dashboard = () => {
+  const dispatch = useDispatch();
+  const { getOrderIncom } = useSelector((state) => state.auth);
+
+  const [dataMonth, setDataMonth] = useState([]);
+  const [dataOrderCount, setdataOrderCount] = useState([]);
+
+  useEffect(() => {
+    dispatch(getMonthWiseOrderIncom());
+  }, []);
+
+  useEffect(() => {
+    let monthName = [
+      "January",
+      "February",
+      "March",
+      "April",
+      "May",
+      "June",
+      "July",
+      "August",
+      "September",
+      "October",
+      "November",
+      "December",
+    ];
+
+    let data = [];
+    let monthOrderCount = [];
+    for (let i = 0; i < getOrderIncom?.length; i++) {
+      const element = getOrderIncom[i];
+      data.push({
+        type: monthName[element?._id?.month],
+        sales: element?.amount,
+      });
+      monthOrderCount.push({
+        type: monthName[element?._id?.month],
+        count: element?.count,
+      });
+    }
+    setDataMonth(data);
+    setdataOrderCount(monthOrderCount);
+  }, [getOrderIncom]);
   // Cart
-  const data = [
-    {
-      type: "Jan",
-      sales: 38,
+  // console.log(dataMonth);
+  const config2 = {
+    data: dataOrderCount,
+    xField: "type",
+    yField: "count",
+    label: {
+      position: "middle",
+      style: {
+        fill: "#FFFFFF",
+        opacity: 1,
+      },
     },
-    {
-      type: "Feb",
-      sales: 52,
+    xAxis: {
+      label: {
+        autoHide: true,
+        autoRotate: false,
+      },
     },
-    {
-      type: "Mar",
-      sales: 61,
+    meta: {
+      type: {
+        alias: "Month",
+      },
+      sales: {
+        alias: "Income",
+      },
     },
-    {
-      type: "Apr",
-      sales: 145,
-    },
-    {
-      type: "May",
-      sales: 48,
-    },
-    {
-      type: "Jun",
-      sales: 38,
-    },
-    {
-      type: "July",
-      sales: 38,
-    },
-    {
-      type: "Aug",
-      sales: 85,
-    },
-    {
-      type: "Spt",
-      sales: 65,
-    },
-    {
-      type: "Oct",
-      sales: 22,
-    },
-    {
-      type: "Nov",
-      sales: 50,
-    },
-    {
-      type: "Dev",
-      sales: 48,
-    },
-  ];
+  };
   const config = {
-    data,
+    data: dataMonth,
     xField: "type",
     yField: "sales",
     label: {
@@ -157,10 +178,19 @@ const Dashboard = () => {
           </div>
         </div>
       </div>
-      <div className="mt-4">
-        <h3 className="mb-4">Income Statics</h3>
-        <div>
-          <Column {...config} />;
+
+      <div className="d-flex justify-content-between gap-30">
+        <div className="mt-4 flex-grow-1 w-50">
+          <h3 className="mb-4 ">Income Statics</h3>
+          <div>
+            <Column {...config} />;
+          </div>
+        </div>
+        <div className="mt-4 flex-grow-1 w-50">
+          <h3 className="mb-4 ">Income Statics</h3>
+          <div>
+            <Column {...config2} />;
+          </div>
         </div>
       </div>
 
