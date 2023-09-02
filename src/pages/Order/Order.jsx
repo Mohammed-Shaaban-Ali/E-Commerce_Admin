@@ -62,13 +62,12 @@ const Order = () => {
       action: (
         <>
           <select
+            defaultValue={orders[i]?.orderStatus}
             onChange={(e) => updateStatus(orders[i]?._id, e.target.value)}
             name=""
             className="form-control form-select"
           >
-            <option value="Order" selected disabled>
-              Order
-            </option>
+            <option value="Order">Order</option>
             <option value="Processed">Processed</option>
             <option value="Shipped">Shipped</option>
             <option value="Out For Delivery">Out For Delivery</option>
