@@ -1,10 +1,10 @@
 import { Table } from "antd";
-import { useEffect } from "react";
-import { useDispatch, useSelector } from "react-redux";
+import { useEffect, useState } from "react";
+import { useDispatch, useSelector, useStore } from "react-redux";
 import { Link } from "react-router-dom";
 import { BiEdit } from "react-icons/bi";
 import { AiFillDelete } from "react-icons/ai";
-import { getOrders } from "../../redux/slices/authSlice";
+import { getOrders, updateOrder } from "../../redux/slices/authSlice";
 
 const Order = () => {
   const dispatch = useDispatch();
@@ -12,6 +12,11 @@ const Order = () => {
   useEffect(() => {
     dispatch(getOrders());
   }, []);
+
+  const updateStatus = (id, value) => {
+    const data = { id: id, status: value };
+    dispatch(updateOrder(data));
+  };
   // Table
   const columns = [
     {
@@ -47,22 +52,29 @@ const Order = () => {
         orders[i]?.shippingInfo?.firstName +
         " " +
         orders[i]?.shippingInfo?.lastName,
-      Product: orders[i]?.orderItems?.map((i, index) => (
-        <Link key={index} to={`/admin/view-order/${i?.product?._id}`}>
-          {i?.product?.title.substr(0, 30) + "..."}
+      Product: orders[i]?.orderItems?.map((item, index) => (
+        <Link key={index} to={`/admin/view-order/${orders[i]?._id}`}>
+          {item?.product?.title.substr(0, 30) + "..."}
         </Link>
       )),
       amount: orders[i]?.totalPriceAfterDiscount,
       date: new Date(orders[i]?.createdAt).toLocaleString(),
       action: (
-        <div className="d-flex gap-4 fs-5">
-          <Link style={{ color: "green" }} to="/1">
-            <BiEdit />
-          </Link>
-          <Link style={{ color: "red" }} to="/2">
-            <AiFillDelete />
-          </Link>
-        </div>
+        <>
+          <select
+            onChange={(e) => updateStatus(orders[i]?._id, e.target.value)}
+            name=""
+            className="form-control form-select"
+          >
+            <option value="Order" selected disabled>
+              Order
+            </option>
+            <option value="Processed">Processed</option>
+            <option value="Shipped">Shipped</option>
+            <option value="Out For Delivery">Out For Delivery</option>
+            <option value="Delivert">Delivert</option>
+          </select>
+        </>
       ),
     });
   }

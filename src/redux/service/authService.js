@@ -1,5 +1,7 @@
 import request from "../../utils/request";
+import { toast } from "react-toastify";
 import { ConfigToken } from "../../utils/validateToken";
+
 const login = async (userData) => {
   const { data } = await request.post("/api/user/login", userData);
   if (data) {
@@ -11,6 +13,25 @@ const login = async (userData) => {
 const getOrders = async () => {
   try {
     const { data } = await request.get("/api/user/cart/get-all-orders");
+    return data;
+  } catch (error) {
+    console.error(error);
+  }
+};
+const getSingleOrder = async (id) => {
+  try {
+    const { data } = await request.get(`/api/user/cart/getsingleOrder/${id}`);
+    return data;
+  } catch (error) {
+    console.error(error);
+  }
+};
+const updateOrder = async (Data) => {
+  const { id, status } = Data;
+  try {
+    const { data } = await request.put(`/api/user/cart/updateOrder/${id}`, {
+      status,
+    });
     return data;
   } catch (error) {
     console.error(error);
@@ -46,5 +67,7 @@ const authService = {
   getOrders,
   getMonthWiseOrderIncom,
   getYearsTotalOrders,
+  getSingleOrder,
+  updateOrder,
 };
 export default authService;
