@@ -4,20 +4,19 @@ import { useDispatch, useSelector } from "react-redux";
 import { Link, useLocation, useNavigate } from "react-router-dom";
 import { BiEdit } from "react-icons/bi";
 import { AiFillDelete } from "react-icons/ai";
-import { getOrderbyid, getOrders } from "../../redux/slices/authSlice";
+import { getSingleOrder } from "../../redux/slices/authSlice";
 
 const ViewOrder = () => {
+  const dispatch = useDispatch();
   const location = useLocation();
   const navigate = useNavigate();
 
   const orderId = location.pathname.split("/")[3];
-  const dispatch = useDispatch();
+  const { singleorder } = useSelector((state) => state.auth);
   useEffect(() => {
-    dispatch(getOrderbyid(orderId));
+    dispatch(getSingleOrder(orderId));
   }, []);
-  const order = useSelector((state) => state.auth.ordersbyid);
 
-  const productsOrder = order ? order[0].products : [];
   // Table
   const columns = [
     {
@@ -37,13 +36,14 @@ const ViewOrder = () => {
       dataIndex: "count",
     },
     {
-      title: "Color",
-      dataIndex: "color",
-    },
-    {
       title: "Price",
       dataIndex: "Price",
     },
+    {
+      title: "Color",
+      dataIndex: "color",
+    },
+
     {
       title: "Date",
       dataIndex: "date",
@@ -54,39 +54,54 @@ const ViewOrder = () => {
     },
   ];
   const data1 = [];
-  for (let i = 0; i < productsOrder?.length; i++) {
+  for (let i = 0; i < singleorder?.length; i++) {
     data1.push({
       Key: i + 1,
-      name: productsOrder[i]?.product?.title,
-      brand: productsOrder[i]?.product?.brand,
+      name: singleorder[i]?.orderItems?.map((item, index) => (
+        <p style={{ width: "400px" }} key={index}>
+          {item?.product?.title}
+        </p>
+      )),
+      brand: singleorder[i]?.orderItems?.map((item, index) => (
+        <p key={index}>{item?.product?.brand}</p>
+      )),
+
+      count: singleorder[i]?.orderItems?.map((item, index) => (
+        <p key={index}>{item?.quantity}</p>
+      )),
 
       color: (
         <div>
-          {productsOrder[i]?.product?.color?.map((e, inx) => (
+          {singleorder[i]?.orderItems?.map((e, inx) => (
             <div
               key={inx}
               style={{
                 width: "25px",
                 height: "25px",
                 borderRadius: "50%",
-                backgroundColor: `${e.color}`,
+                backgroundColor: `${e?.color?.title}`,
               }}
             ></div>
           ))}
         </div>
       ),
-      count: productsOrder[i]?.count,
-      Price: productsOrder[i]?.product?.price,
-      date: new Date(productsOrder[i]?.product?.createdAt).toLocaleString(),
+
+      Price: singleorder[i]?.orderItems?.map((item, index) => (
+        <p key={index}>{item?.price}</p>
+      )),
+      date: new Date(singleorder[i]?.createdAt).toLocaleString(),
       action: (
-        <div className="d-flex gap-4 fs-5">
-          <Link style={{ color: "green" }} to="/1">
-            <BiEdit />
-          </Link>
-          <Link style={{ color: "red" }} to="/2">
-            <AiFillDelete />
-          </Link>
-        </div>
+        <>
+          <select name="" className="form-control form-select">
+            <option value="Order" selected disabled>
+              Order
+            </option>
+            <option value="Processed">Processed</option>
+            <option value="Shipped">Shipped</option>
+            <option value="Out For Delivery">Out For Delivery</option>
+            <option value="Delivert">Delivert</option>
+          </select>
+        </>
       ),
     });
   }
