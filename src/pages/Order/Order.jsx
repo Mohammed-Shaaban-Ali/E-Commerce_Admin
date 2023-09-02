@@ -27,8 +27,8 @@ const Order = () => {
       dataIndex: "Product",
     },
     {
-      title: "Price",
-      dataIndex: "price",
+      title: "Amount",
+      dataIndex: "amount",
     },
     {
       title: "Date",
@@ -43,32 +43,17 @@ const Order = () => {
   for (let i = 0; i < orders?.length; i++) {
     data1.push({
       Key: i + 1,
-      name: orders[i].orderBy.firstName + " " + orders[i].orderBy.lastName,
-      Product: orders[i].products?.map((i) => {
-        return (
-          <>
-            <ul key={i}>
-              <p>
-                <Link to={`/admin/view-order/${i.product._id}`}>
-                  {i.product?.title}
-                </Link>
-              </p>
-            </ul>
-          </>
-        );
-      }),
-      price: orders[i].products?.map((i) => {
-        return (
-          <>
-            <ul key={i}>
-              <li key={i}>
-                <p>{i.product?.price}</p>
-              </li>
-            </ul>
-          </>
-        );
-      }),
-      date: new Date(orders[i].createdAt).toLocaleString(),
+      name:
+        orders[i]?.shippingInfo?.firstName +
+        " " +
+        orders[i]?.shippingInfo?.lastName,
+      Product: orders[i]?.orderItems?.map((i, index) => (
+        <Link key={index} to={`/admin/view-order/${i?.product?._id}`}>
+          {i?.product?.title.substr(0, 30) + "..."}
+        </Link>
+      )),
+      amount: orders[i]?.totalPriceAfterDiscount,
+      date: new Date(orders[i]?.createdAt).toLocaleString(),
       action: (
         <div className="d-flex gap-4 fs-5">
           <Link style={{ color: "green" }} to="/1">
