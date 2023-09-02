@@ -29,9 +29,22 @@ const getMonthWiseOrderIncom = async () => {
   }
 };
 
+const getYearsTotalOrders = async () => {
+  try {
+    const { data } = await request.get(
+      "/api/user/getYearsTotalOrders",
+      ConfigToken
+    );
+    return data;
+  } catch (error) {
+    console.error(error);
+  }
+};
+
 const authService = {
   login,
   getOrders,
   getMonthWiseOrderIncom,
+  getYearsTotalOrders,
 };
 export default authService;
