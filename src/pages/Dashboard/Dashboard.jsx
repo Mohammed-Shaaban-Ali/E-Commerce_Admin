@@ -6,12 +6,15 @@ import { FaArrowTrendUp, FaArrowTrendDown } from "react-icons/fa6";
 import { useDispatch, useSelector } from "react-redux";
 import {
   getMonthWiseOrderIncom,
+  getOrders,
   getYearsTotalOrders,
 } from "../../redux/slices/authSlice";
 
 const Dashboard = () => {
   const dispatch = useDispatch();
-  const { getYearsOrders, getOrderIncom } = useSelector((state) => state.auth);
+  const { getYearsOrders, getOrderIncom, orders } = useSelector(
+    (state) => state.auth
+  );
 
   const [dataMonth, setDataMonth] = useState([]);
   const [dataOrderCount, setdataOrderCount] = useState([]);
@@ -19,6 +22,7 @@ const Dashboard = () => {
   useEffect(() => {
     dispatch(getYearsTotalOrders());
     dispatch(getMonthWiseOrderIncom());
+    dispatch(getOrders());
   }, []);
 
   useEffect(() => {
@@ -118,8 +122,20 @@ const Dashboard = () => {
       dataIndex: "name",
     },
     {
-      title: "Product",
+      title: "Product Count",
       dataIndex: "Product",
+    },
+    {
+      title: "Product Price",
+      dataIndex: "Price",
+    },
+    {
+      title: "Total Price",
+      dataIndex: "tprice",
+    },
+    {
+      title: "Total Price After Discount",
+      dataIndex: "dtprice",
     },
     {
       title: "Status",
@@ -127,12 +143,23 @@ const Dashboard = () => {
     },
   ];
   const data1 = [];
-  for (let i = 0; i < 46; i++) {
+  for (let i = 0; i < orders?.length; i++) {
     data1.push({
-      SNo: i,
-      name: `Edward King ${i}`,
-      Product: `Product ${i}`,
-      Status: `Status ${i}`,
+      SNo: i + 1,
+      name:
+        orders[i]?.shippingInfo?.firstName +
+        " " +
+        orders[i]?.shippingInfo?.lastName,
+
+      Product: orders[i]?.orderItems?.map((i, index) => (
+        <i key={index}>{i.quantity}</i>
+      )),
+      Price: orders[i]?.orderItems?.map((i, index) => (
+        <i key={index}>{i.price}</i>
+      )),
+      tprice: orders[i]?.totalPrice,
+      dtprice: orders[i]?.totalPriceAfterDiscount,
+      Status: orders[i]?.orderStatus,
     });
   }
   return (
