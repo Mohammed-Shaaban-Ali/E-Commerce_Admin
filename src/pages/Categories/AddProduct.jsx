@@ -98,6 +98,7 @@ const AddProduct = () => {
   const handleColors = (e) => {
     setColor(e);
   };
+
   return (
     <div>
       <div className="mt-4">
@@ -106,21 +107,143 @@ const AddProduct = () => {
         <div>
           <form
             onSubmit={formik.handleSubmit}
-            className="d-flex flex-column gap-2"
+            className="d-flex flex-column gap-4"
           >
-            <CustomInput
-              type="text"
-              label="Enter product title"
-              name="title"
-              id="title"
-              onChange={formik.handleChange("title")}
-              value={formik.values.title}
-            />
-            <div className="error">
-              {formik.touched.title && formik.errors.title ? (
-                <div>{formik.errors.title}</div>
-              ) : null}
+            <div style={{ gap: "30px" }} className="d-flex ">
+              <div className="w-auto flex-grow-1">
+                <CustomInput
+                  type="text"
+                  label="Enter product title"
+                  name="title"
+                  id="title"
+                  onChange={formik.handleChange("title")}
+                  value={formik.values.title}
+                />
+                <div className="error">
+                  {formik.touched.title && formik.errors.title ? (
+                    <div>{formik.errors.title}</div>
+                  ) : null}
+                </div>
+              </div>
+              <div className="w-auto  flex-grow-1">
+                <CustomInput
+                  type="number"
+                  label="Enter product price"
+                  name="price"
+                  id="price"
+                  onChange={formik.handleChange("price")}
+                  value={formik.values.price}
+                />
+                <div className="error">
+                  {formik.touched.price && formik.errors.price ? (
+                    <div>{formik.errors.price}</div>
+                  ) : null}
+                </div>
+              </div>
+              <div className="w-auto  flex-grow-1">
+                <CustomInput
+                  // iclass="w-50 flex-grow-1"
+                  type="number"
+                  label="Enter product quantity"
+                  name="quantity"
+                  id="quantity"
+                  onChange={formik.handleChange("quantity")}
+                  value={formik.values.quantity}
+                />
+                <div className="error">
+                  {formik.touched.quantity && formik.errors.quantity ? (
+                    <div>{formik.errors.quantity}</div>
+                  ) : null}
+                </div>
+              </div>
             </div>
+
+            <div style={{ gap: "30px" }} className="d-flex ">
+              <div className="w-50 flex-grow-1">
+                <select
+                  className="form-control py-2 "
+                  name="brand"
+                  id="brand"
+                  onChange={formik.handleChange("brand")}
+                  value={formik.values.brand}
+                >
+                  <option disabled value="">
+                    Select Brand
+                  </option>
+                  {brands?.map((i, indx) => (
+                    <option key={indx} value={i.title}>
+                      {i.title}
+                    </option>
+                  ))}
+                </select>
+                <div className="error">
+                  {formik.touched.brand && formik.errors.brand ? (
+                    <div>{formik.errors.brand}</div>
+                  ) : null}
+                </div>
+              </div>
+              <div className="w-50 flex-grow-1">
+                <select
+                  className="form-control py-2 "
+                  name="category"
+                  id="category"
+                  onChange={formik.handleChange("category")}
+                  value={formik.values.category}
+                >
+                  <option disabled value="">
+                    Select category
+                  </option>
+                  {categories?.map((i, indx) => (
+                    <option key={indx} value={i.title}>
+                      {i.title}
+                    </option>
+                  ))}
+                </select>
+                <div className="error">
+                  {formik.touched.category && formik.errors.category ? (
+                    <div>{formik.errors.category}</div>
+                  ) : null}
+                </div>
+              </div>
+            </div>
+            <div style={{ gap: "30px" }} className="d-flex ">
+              <div className="w-50 flex-grow-1">
+                <select
+                  className="form-control py-2 "
+                  name="tags"
+                  id="tags"
+                  onChange={formik.handleChange("tags")}
+                  value={formik.values.tags}
+                >
+                  <option disabled value="">
+                    Select tags
+                  </option>
+                  <option value="featured">Featured</option>
+                  <option value="popular">Popular</option>
+                  <option value="special">Special</option>
+                </select>
+                <div className="error">
+                  {formik.touched.tags && formik.errors.tags ? (
+                    <div>{formik.errors.tags}</div>
+                  ) : null}
+                </div>
+              </div>
+              <div className="w-50 flex-grow-1">
+                <Select
+                  mode="multiple"
+                  allowClear
+                  className="w-100"
+                  placeholder="Select colors"
+                  defaultValue={color}
+                  onChange={(i) => handleColors(i)}
+                  options={coloropt}
+                />
+                <div className="error">
+                  {formik.touched.color && formik.errors.color}
+                </div>
+              </div>
+            </div>
+
             <div>
               <ReactQuill
                 style={{ minHeight: "200px" }}
@@ -133,107 +256,6 @@ const AddProduct = () => {
             <div className="error">
               {formik.touched.description && formik.errors.description ? (
                 <div>{formik.errors.description}</div>
-              ) : null}
-            </div>
-            <CustomInput
-              type="number"
-              label="Enter product price"
-              name="price"
-              id="price"
-              onChange={formik.handleChange("price")}
-              value={formik.values.price}
-            />
-            <div className="error">
-              {formik.touched.price && formik.errors.price ? (
-                <div>{formik.errors.price}</div>
-              ) : null}
-            </div>
-            <select
-              className="form-control py-2 "
-              name="brand"
-              id="brand"
-              onChange={formik.handleChange("brand")}
-              value={formik.values.brand}
-            >
-              <option disabled value="">
-                Select Brand
-              </option>
-              {brands?.map((i, indx) => (
-                <option key={indx} value={i.title}>
-                  {i.title}
-                </option>
-              ))}
-            </select>
-            <div className="error">
-              {formik.touched.brand && formik.errors.brand ? (
-                <div>{formik.errors.brand}</div>
-              ) : null}
-            </div>
-            <select
-              className="form-control py-2 "
-              name="category"
-              id="category"
-              onChange={formik.handleChange("category")}
-              value={formik.values.category}
-            >
-              <option disabled value="">
-                Select category
-              </option>
-              {categories?.map((i, indx) => (
-                <option key={indx} value={i.title}>
-                  {i.title}
-                </option>
-              ))}
-            </select>
-            <div className="error">
-              {formik.touched.category && formik.errors.category ? (
-                <div>{formik.errors.category}</div>
-              ) : null}
-            </div>
-
-            <select
-              className="form-control py-2 "
-              name="tags"
-              id="tags"
-              onChange={formik.handleChange("tags")}
-              value={formik.values.tags}
-            >
-              <option disabled value="">
-                Select tags
-              </option>
-              <option value="featured">Featured</option>
-              <option value="popular">Popular</option>
-              <option value="special">Special</option>
-            </select>
-            <div className="error">
-              {formik.touched.tags && formik.errors.tags ? (
-                <div>{formik.errors.tags}</div>
-              ) : null}
-            </div>
-
-            <Select
-              mode="multiple"
-              allowClear
-              className="w-100"
-              placeholder="Select colors"
-              defaultValue={color}
-              onChange={(i) => handleColors(i)}
-              options={coloropt}
-            />
-            <div className="error">
-              {formik.touched.color && formik.errors.color}
-            </div>
-            <CustomInput
-              type="number"
-              label="Enter product quantity"
-              name="quantity"
-              id="quantity"
-              onChange={formik.handleChange("quantity")}
-              value={formik.values.quantity}
-            />
-            <div className="error">
-              {formik.touched.quantity && formik.errors.quantity ? (
-                <div>{formik.errors.quantity}</div>
               ) : null}
             </div>
             <div className="bg-white text-center p-5 border-1">

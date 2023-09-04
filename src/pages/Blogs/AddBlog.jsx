@@ -84,46 +84,48 @@ const AddBlog = () => {
         <div>
           <form
             onSubmit={formik.handleSubmit}
-            className="d-flex flex-column gap-2"
+            className="d-flex flex-column gap-3"
           >
-            <div className="mt-4">
-              <CustomInput
-                type="text"
-                label="Enter product title"
-                name="title"
-                id="title"
-                onChange={formik.handleChange("title")}
-                value={formik.values.title}
-              />
-              <div className="error">
-                {formik.touched.title && formik.errors.title ? (
-                  <div>{formik.errors.title}</div>
-                ) : null}
+            <div style={{ gap: "30px" }} className="d-flex ">
+              <div className="w-auto flex-grow-1">
+                <CustomInput
+                  type="text"
+                  label="Enter product title"
+                  name="title"
+                  id="title"
+                  onChange={formik.handleChange("title")}
+                  value={formik.values.title}
+                />
+                <div className="error">
+                  {formik.touched.title && formik.errors.title ? (
+                    <div>{formik.errors.title}</div>
+                  ) : null}
+                </div>
+              </div>
+              <div className="w-auto flex-grow-1">
+                <select
+                  className="form-control py-2 mt-3"
+                  name="category"
+                  id="category"
+                  onChange={formik.handleChange("category")}
+                  value={formik.values.category}
+                >
+                  <option disabled value="">
+                    Select category
+                  </option>
+                  {blogCategory?.map((i, indx) => (
+                    <option key={indx} value={i.title}>
+                      {i.title}
+                    </option>
+                  ))}
+                </select>
+                <div className="error">
+                  {formik.touched.category && formik.errors.category ? (
+                    <div>{formik.errors.category}</div>
+                  ) : null}
+                </div>
               </div>
             </div>
-
-            <select
-              className="form-control py-2 "
-              name="category"
-              id="category"
-              onChange={formik.handleChange("category")}
-              value={formik.values.category}
-            >
-              <option disabled value="">
-                Select category
-              </option>
-              {blogCategory?.map((i, indx) => (
-                <option key={indx} value={i.title}>
-                  {i.title}
-                </option>
-              ))}
-            </select>
-            <div className="error">
-              {formik.touched.category && formik.errors.category ? (
-                <div>{formik.errors.category}</div>
-              ) : null}
-            </div>
-
             <div>
               <ReactQuill
                 style={{ minHeight: "200px" }}
