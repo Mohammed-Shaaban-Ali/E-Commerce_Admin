@@ -38,8 +38,8 @@ const ProductList = () => {
       dataIndex: "category",
     },
     {
-      title: "Color",
-      dataIndex: "color",
+      title: "quantity",
+      dataIndex: "quantity",
     },
     {
       title: "Price",
@@ -53,23 +53,15 @@ const ProductList = () => {
     },
   ];
   const data1 = [];
-  for (let i = 0; i < products.length; i++) {
+  for (let i = 0; i < products?.length; i++) {
     data1.push({
       Key: i + 1,
-      title: products[i].title,
-      brand: products[i].brand,
-      category: products[i].category,
-      color: (
-        <div
-          style={{
-            width: "25px",
-            height: "25px",
-            borderRadius: "50%",
-            // backgroundColor: products[i].color[0],
-          }}
-        ></div>
-      ),
-      price: products[i].price,
+      title: products[i]?.title,
+      brand: products[i]?.brand,
+      category: products[i]?.category,
+
+      quantity: products[i]?.quantity,
+      price: products[i]?.price,
       action: (
         <div className="d-flex gap-4 fs-5">
           <Link style={{ color: "green" }} to="/1">
@@ -77,7 +69,7 @@ const ProductList = () => {
           </Link>
           <Link
             style={{ color: "red" }}
-            onClick={() => showModal(products[i]._id)}
+            onClick={() => showModal(products[i]?._id)}
           >
             <AiFillDelete />
           </Link>

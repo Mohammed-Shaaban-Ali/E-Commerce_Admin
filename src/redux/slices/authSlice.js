@@ -7,13 +7,16 @@ const getUserFromLocalStorge = localStorage.getItem("user")
   ? JSON.parse(localStorage.getItem("user"))
   : null;
 
-export const login = createAsyncThunk("users/login", async (user, thunkAPI) => {
-  try {
-    return await authService.login(user);
-  } catch (error) {
-    return thunkAPI.rejectWithValue(error);
+export const login = createAsyncThunk(
+  "users/admin-login",
+  async (user, thunkAPI) => {
+    try {
+      return await authService.login(user);
+    } catch (error) {
+      return thunkAPI.rejectWithValue(error);
+    }
   }
-});
+);
 
 export const getOrders = createAsyncThunk(
   "users/getOrders",
