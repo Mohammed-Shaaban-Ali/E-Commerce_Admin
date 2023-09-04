@@ -93,48 +93,53 @@ const AddCoupons = () => {
 
         <div>
           <form onSubmit={formik.handleSubmit}>
-            <CustomInput
-              type="text"
-              label="Coupon Name"
-              name="name"
-              id="name"
-              onChange={formik.handleChange("name")}
-              value={formik.values.name}
-            />
-            <div className="error">
-              {formik.touched.name && formik.errors.name ? (
-                <div>{formik.errors.name}</div>
-              ) : null}
+            <div style={{ gap: "30px" }} className="d-flex ">
+              <div className="w-auto flex-grow-1">
+                <CustomInput
+                  type="text"
+                  label="Coupon Name"
+                  name="name"
+                  id="name"
+                  onChange={formik.handleChange("name")}
+                  value={formik.values.name}
+                />
+                <div className="error">
+                  {formik.touched.name && formik.errors.name ? (
+                    <div>{formik.errors.name}</div>
+                  ) : null}
+                </div>
+              </div>
+              <div className="w-auto flex-grow-1">
+                <CustomInput
+                  type="date"
+                  label="Expiry date"
+                  name="expiry"
+                  id="expiry"
+                  onChange={formik.handleChange("expiry")}
+                  value={formik.values.expiry}
+                />
+                <div className="error">
+                  {formik.touched.expiry && formik.errors.expiry ? (
+                    <div>{formik.errors.expiry}</div>
+                  ) : null}
+                </div>
+              </div>
+              <div className="w-auto flex-grow-1">
+                <CustomInput
+                  type="number"
+                  label="Descount Number"
+                  name="discount"
+                  id="discount"
+                  onChange={formik.handleChange("discount")}
+                  value={formik.values.discount}
+                />
+                <div className="error">
+                  {formik.touched.discount && formik.errors.discount ? (
+                    <div>{formik.errors.discount}</div>
+                  ) : null}
+                </div>
+              </div>
             </div>
-
-            <CustomInput
-              type="date"
-              label="Expiry date"
-              name="expiry"
-              id="expiry"
-              onChange={formik.handleChange("expiry")}
-              value={formik.values.expiry}
-            />
-            <div className="error">
-              {formik.touched.expiry && formik.errors.expiry ? (
-                <div>{formik.errors.expiry}</div>
-              ) : null}
-            </div>
-
-            <CustomInput
-              type="number"
-              label="Descount Number"
-              name="discount"
-              id="discount"
-              onChange={formik.handleChange("discount")}
-              value={formik.values.discount}
-            />
-            <div className="error">
-              {formik.touched.discount && formik.errors.discount ? (
-                <div>{formik.errors.discount}</div>
-              ) : null}
-            </div>
-
             <button
               type="submit"
               className="btn btn-success border-0 rounded-3 my-4"

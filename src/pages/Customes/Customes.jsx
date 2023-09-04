@@ -10,7 +10,7 @@ const Customes = () => {
   );
   useEffect(() => {
     dispatch(getUsers());
-  }, [customers]);
+  }, []);
 
   // Table
   const columns = [
