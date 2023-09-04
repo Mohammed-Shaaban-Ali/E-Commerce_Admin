@@ -52,7 +52,7 @@ const Enquiries = () => {
     },
   ];
   const data1 = [];
-  for (let i = 0; i < enquiries.length; i++) {
+  for (let i = 0; i < enquiries?.length; i++) {
     data1.push({
       Key: i + 1,
       name: enquiries[i].name,

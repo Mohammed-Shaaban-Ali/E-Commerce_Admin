@@ -48,23 +48,23 @@ const CouponsList = () => {
     },
   ];
   const data1 = [];
-  for (let i = 0; i < coupons.length; i++) {
+  for (let i = 0; i < coupons?.length; i++) {
     data1.push({
       Key: i + 1,
-      name: coupons[i].name,
-      disCount: coupons[i].discount,
-      expiry: new Date(coupons[i].expiry).toLocaleString(),
+      name: coupons[i]?.name,
+      disCount: coupons[i]?.discount,
+      expiry: new Date(coupons[i]?.expiry).toLocaleString(),
       action: (
         <div className="d-flex gap-4 fs-5">
           <Link
             style={{ color: "green" }}
-            to={`/admin/edit-coupon/${coupons[i]._id}`}
+            to={`/admin/edit-coupon/${coupons[i]?._id}`}
           >
             <BiEdit />
           </Link>
           <Link
             style={{ color: "red" }}
-            onClick={() => showModal(coupons[i]._id)}
+            onClick={() => showModal(coupons[i]?._id)}
           >
             <AiFillDelete />
           </Link>

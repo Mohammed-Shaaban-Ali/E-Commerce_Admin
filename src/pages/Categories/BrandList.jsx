@@ -40,21 +40,21 @@ const BrandList = () => {
     },
   ];
   const data1 = [];
-  for (let i = 0; i < brands.length; i++) {
+  for (let i = 0; i < brands?.length; i++) {
     data1.push({
       id: i + 1,
-      title: brands[i].title,
+      title: brands[i]?.title,
       action: (
         <div className="d-flex gap-4 fs-5">
           <Link
             style={{ color: "green" }}
-            to={`/admin/edit-brand/${brands[i]._id}`}
+            to={`/admin/edit-brand/${brands[i]?._id}`}
           >
             <BiEdit />
           </Link>
           <Link
             style={{ color: "red" }}
-            onClick={() => showModal(brands[i]._id)}
+            onClick={() => showModal(brands[i]?._id)}
           >
             <AiFillDelete />
           </Link>
