@@ -262,36 +262,49 @@ const AddProduct = () => {
                   <div>{formik.errors.description}</div>
                 ) : null}
               </div>
-
-              <div className="bg-white text-center p-5 border-1">
-                <Dropzone
-                  onDrop={(acceptedFiles) => dispatch(uploadImg(acceptedFiles))}
-                >
-                  {({ getRootProps, getInputProps }) => (
-                    <section>
-                      <div {...getRootProps()}>
-                        <input {...getInputProps()} />
-                        <p>
-                          Drag 'n' drop some files here, or click to select
-                          files
-                        </p>
-                      </div>
-                    </section>
-                  )}
-                </Dropzone>
-              </div>
-              <div className="showImages d-flex flex-wrap gap-3">
-                {img?.map((img, index) => (
-                  <div className="position-relative" key={index}>
-                    <button
-                      className="btn-close position-absolute"
-                      style={{ top: "10px", right: "10px" }}
-                      onClick={() => dispatch(deleteImg(img.public_id))}
-                    ></button>
-                    <img src={img.url} alt={img.url} width={200} height={200} />
+              {imagesisLoading ? (
+                <Reloader />
+              ) : (
+                <>
+                  <div className="bg-white text-center p-5 border-1">
+                    <Dropzone
+                      onDrop={(acceptedFiles) =>
+                        dispatch(uploadImg(acceptedFiles))
+                      }
+                    >
+                      {({ getRootProps, getInputProps }) => (
+                        <section>
+                          <div {...getRootProps()}>
+                            <input {...getInputProps()} />
+                            <p>
+                              Drag 'n' drop some files here, or click to select
+                              files
+                            </p>
+                          </div>
+                        </section>
+                      )}
+                    </Dropzone>
                   </div>
-                ))}
-              </div>
+
+                  <div className="showImages d-flex flex-wrap gap-3">
+                    {img?.map((img, index) => (
+                      <div className="position-relative" key={index}>
+                        <button
+                          className="btn-close position-absolute"
+                          style={{ top: "10px", right: "10px" }}
+                          onClick={() => dispatch(deleteImg(img.public_id))}
+                        ></button>
+                        <img
+                          src={img.url}
+                          alt={img.url}
+                          width={200}
+                          height={200}
+                        />
+                      </div>
+                    ))}
+                  </div>
+                </>
+              )}
               <button
                 type="submit"
                 className="btn btn-success border-0 rounded-3 my-4"
