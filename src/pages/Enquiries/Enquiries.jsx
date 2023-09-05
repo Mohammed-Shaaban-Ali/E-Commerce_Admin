@@ -11,6 +11,7 @@ import {
 } from "../../redux/slices/enquirySlice";
 import CustomModal from "../../components/CustomModal";
 import { toast } from "react-toastify";
+import Reloader from "../../components/Reloader";
 
 const Enquiries = () => {
   const [open, setOpen] = useState(false);
@@ -123,12 +124,16 @@ const Enquiries = () => {
   };
   return (
     <div>
-      <div className="mt-4">
-        <h3 className="mb-4">Enquiries</h3>
-        <div>
-          <Table columns={columns} dataSource={data1} />
+      {isLoading ? (
+        <Reloader />
+      ) : (
+        <div className="mt-4">
+          <h3 className="mb-4">Enquiries</h3>
+          <div>
+            <Table columns={columns} dataSource={data1} />
+          </div>
         </div>
-      </div>
+      )}
       <CustomModal
         handleOk={handleOk}
         handleCancel={handleCancel}

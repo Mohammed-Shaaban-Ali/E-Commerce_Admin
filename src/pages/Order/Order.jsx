@@ -5,10 +5,11 @@ import { Link } from "react-router-dom";
 import { BiEdit } from "react-icons/bi";
 import { AiFillDelete } from "react-icons/ai";
 import { getOrders, updateOrder } from "../../redux/slices/authSlice";
+import Reloader from "../../components/Reloader";
 
 const Order = () => {
   const dispatch = useDispatch();
-  const { orders } = useSelector((state) => state.auth);
+  const { orders, isLoading } = useSelector((state) => state.auth);
   useEffect(() => {
     dispatch(getOrders());
   }, []);
@@ -79,12 +80,16 @@ const Order = () => {
   }
   return (
     <div>
-      <div className="mt-4">
-        <h3 className="mb-4">Order</h3>
-        <div>
-          <Table columns={columns} dataSource={data1} />
+      {isLoading ? (
+        <Reloader />
+      ) : (
+        <div className="mt-4">
+          <h3 className="mb-4">Order</h3>
+          <div>
+            <Table columns={columns} dataSource={data1} />
+          </div>
         </div>
-      </div>
+      )}
     </div>
   );
 };

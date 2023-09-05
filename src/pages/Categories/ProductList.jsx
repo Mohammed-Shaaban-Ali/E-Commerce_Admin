@@ -8,6 +8,7 @@ import { AiFillDelete } from "react-icons/ai";
 import { useState } from "react";
 import { toast } from "react-toastify";
 import CustomModal from "../../components/CustomModal";
+import Reloader from "../../components/Reloader";
 
 const ProductList = () => {
   const [open, setOpen] = useState(false);
@@ -40,6 +41,7 @@ const ProductList = () => {
     {
       title: "quantity",
       dataIndex: "quantity",
+      sorter: (a, b) => a.quantity - b.quantity,
     },
     {
       title: "Price",
@@ -94,12 +96,16 @@ const ProductList = () => {
   };
   return (
     <div>
-      <div className="mt-4">
-        <h3 className="mb-4">Product List</h3>
-        <div>
-          <Table columns={columns} dataSource={data1} />
+      {isLoading ? (
+        <Reloader />
+      ) : (
+        <div className="mt-4">
+          <h3 className="mb-4">Product List</h3>
+          <div>
+            <Table columns={columns} dataSource={data1} />
+          </div>
         </div>
-      </div>
+      )}
       <CustomModal
         handleOk={handleOk}
         handleCancel={handleCancel}

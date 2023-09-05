@@ -11,6 +11,7 @@ import { BiEdit } from "react-icons/bi";
 import { AiFillDelete } from "react-icons/ai";
 import CustomModal from "../../components/CustomModal";
 import { toast } from "react-toastify";
+import Reloader from "../../components/Reloader";
 
 const BrandList = () => {
   const [open, setOpen] = useState(false);
@@ -81,12 +82,16 @@ const BrandList = () => {
   };
   return (
     <div>
-      <div className="mt-4">
-        <h3 className="mb-4">Brand List</h3>
-        <div>
-          <Table columns={columns} dataSource={data1} />
+      {isLoading ? (
+        <Reloader />
+      ) : (
+        <div className="mt-4">
+          <h3 className="mb-4">Brand List</h3>
+          <div>
+            <Table columns={columns} dataSource={data1} />
+          </div>
         </div>
-      </div>
+      )}
       <CustomModal
         handleOk={handleOk}
         handleCancel={handleCancel}
