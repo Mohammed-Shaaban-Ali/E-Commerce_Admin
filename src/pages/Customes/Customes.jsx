@@ -2,6 +2,7 @@ import { Table } from "antd";
 import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { getUsers } from "../../redux/slices/customerSlice";
+import Reloader from "../../components/Reloader";
 
 const Customes = () => {
   const dispatch = useDispatch();
@@ -48,12 +49,16 @@ const Customes = () => {
   }
   return (
     <div>
-      <div className="mt-4">
-        <h3 className="mb-4">Customes</h3>
-        <div>
-          <Table columns={columns} dataSource={data1} />
+      {isLoading ? (
+        <Reloader />
+      ) : (
+        <div className="mt-4">
+          <h3 className="mb-4">Customes</h3>
+          <div>
+            <Table columns={columns} dataSource={data1} />
+          </div>
         </div>
-      </div>
+      )}
     </div>
   );
 };

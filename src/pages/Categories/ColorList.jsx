@@ -11,6 +11,7 @@ import {
 } from "../../redux/slices/colorSlice";
 import { toast } from "react-toastify";
 import CustomModal from "../../components/CustomModal";
+import Reloader from "../../components/Reloader";
 
 const ColorList = () => {
   const [open, setOpen] = useState(false);
@@ -89,12 +90,16 @@ const ColorList = () => {
   };
   return (
     <div>
-      <div className="mt-4">
-        <h3 className="mb-4">ColoList</h3>
-        <div>
-          <Table columns={columns} dataSource={data1} />
+      {isLoading ? (
+        <Reloader />
+      ) : (
+        <div className="mt-4">
+          <h3 className="mb-4">ColoList</h3>
+          <div>
+            <Table columns={columns} dataSource={data1} />
+          </div>
         </div>
-      </div>
+      )}
       <CustomModal
         handleOk={handleOk}
         handleCancel={handleCancel}

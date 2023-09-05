@@ -11,6 +11,7 @@ import {
 } from "../../redux/slices/blogCategorySlice";
 import CustomModal from "../../components/CustomModal";
 import { toast } from "react-toastify";
+import Reloader from "../../components/Reloader";
 
 const BlogListCategories = () => {
   const [open, setOpen] = useState(false);
@@ -81,12 +82,16 @@ const BlogListCategories = () => {
   };
   return (
     <div>
-      <div className="mt-4">
-        <h3 className="mb-4">Blog List Categoires</h3>
-        <div>
-          <Table columns={columns} dataSource={data1} />
+      {isLoading ? (
+        <Reloader />
+      ) : (
+        <div className="mt-4">
+          <h3 className="mb-4">Blog List Categoires</h3>
+          <div>
+            <Table columns={columns} dataSource={data1} />
+          </div>
         </div>
-      </div>
+      )}
       <CustomModal
         handleOk={handleOk}
         handleCancel={handleCancel}

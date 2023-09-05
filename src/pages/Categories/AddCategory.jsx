@@ -30,6 +30,7 @@ const AddCategory = () => {
     singlecategory,
     updateCategoryData,
   } = useSelector((state) => state.productCategory);
+
   useEffect(() => {
     if (categoryId !== undefined) {
       dispatch(getSinglecategry(categoryId));
@@ -78,7 +79,7 @@ const AddCategory = () => {
           <form onSubmit={formik.handleSubmit}>
             <CustomInput
               type="text"
-              label="Category Brand Name"
+              label="Category Name"
               name="title"
               id="title"
               onChange={formik.handleChange("title")}

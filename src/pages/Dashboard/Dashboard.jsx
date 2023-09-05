@@ -9,10 +9,11 @@ import {
   getOrders,
   getYearsTotalOrders,
 } from "../../redux/slices/authSlice";
+import Reloader from "../../components/Reloader";
 
 const Dashboard = () => {
   const dispatch = useDispatch();
-  const { getYearsOrders, getOrderIncom, orders } = useSelector(
+  const { getYearsOrders, getOrderIncom, orders, isLoading } = useSelector(
     (state) => state.auth
   );
 
@@ -164,58 +165,63 @@ const Dashboard = () => {
   }
   return (
     <div>
-      <h3 className="mb-4">Dashboard</h3>
-      <div className="d-flex justify-content-between align-items-center gap-5">
-        <div className="cardContant d-flex justify-content-between align-items-end flex-grow-1 bg-white p-3 ">
-          <div>
-            <p>Total Income </p>
-            <h4>$ {getYearsOrders ? getYearsOrders[0]?.amount : ""}</h4>
-          </div>
-          <div className="">
-            <div className="increase">
-              <FaArrowTrendUp />
-              <h6>32.7%</h6>
+      {isLoading ? (
+        <Reloader />
+      ) : (
+        <>
+          <h3 className="mb-4">Dashboard</h3>
+          <div className="d-flex justify-content-between align-items-center gap-5">
+            <div className="cardContant d-flex justify-content-between align-items-end flex-grow-1 bg-white p-3 ">
+              <div>
+                <p>Total Income </p>
+                <h4>$ {getYearsOrders ? getYearsOrders[0]?.amount : ""}</h4>
+              </div>
+              <div className="">
+                <div className="increase">
+                  <FaArrowTrendUp />
+                  <h6>32.7%</h6>
+                </div>
+                <p>Compared To Last Yeear</p>
+              </div>
             </div>
-            <p>Compared To Last Yeear</p>
-          </div>
-        </div>
 
-        <div className="cardContant d-flex justify-content-between align-items-end flex-grow-1 bg-white p-3 ">
-          <div>
-            <p>Total Orders </p>
-            <h4> {getYearsOrders ? getYearsOrders[0]?.count : ""}</h4>
-          </div>
-          <div>
-            <div className="increase">
-              <FaArrowTrendUp />
-              <h6>27.1%</h6>
+            <div className="cardContant d-flex justify-content-between align-items-end flex-grow-1 bg-white p-3 ">
+              <div>
+                <p>Total Orders </p>
+                <h4> {getYearsOrders ? getYearsOrders[0]?.count : ""}</h4>
+              </div>
+              <div>
+                <div className="increase">
+                  <FaArrowTrendUp />
+                  <h6>27.1%</h6>
+                </div>
+                <p>Compared To Last Yeear</p>
+              </div>
             </div>
-            <p>Compared To Last Yeear</p>
           </div>
-        </div>
-      </div>
+          <div className="d-flex justify-content-between gap-5">
+            <div className="mt-4 flex-grow-1 w-50">
+              <h3 className="mb-4 ">Income Statics</h3>
+              <div>
+                <Column {...config} />;
+              </div>
+            </div>
+            <div className="mt-4 flex-grow-1 w-50">
+              <h3 className="mb-4 ">Total Orders</h3>
+              <div>
+                <Column {...config2} />;
+              </div>
+            </div>
+          </div>
 
-      <div className="d-flex justify-content-between gap-5">
-        <div className="mt-4 flex-grow-1 w-50">
-          <h3 className="mb-4 ">Income Statics</h3>
-          <div>
-            <Column {...config} />;
+          <div className="mt-4">
+            <h3 className="mb-4">Recent Orders</h3>
+            <div>
+              <Table columns={columns} dataSource={data1} />
+            </div>
           </div>
-        </div>
-        <div className="mt-4 flex-grow-1 w-50">
-          <h3 className="mb-4 ">Total Orders</h3>
-          <div>
-            <Column {...config2} />;
-          </div>
-        </div>
-      </div>
-
-      <div className="mt-4">
-        <h3 className="mb-4">Recent Orders</h3>
-        <div>
-          <Table columns={columns} dataSource={data1} />
-        </div>
-      </div>
+        </>
+      )}
     </div>
   );
 };

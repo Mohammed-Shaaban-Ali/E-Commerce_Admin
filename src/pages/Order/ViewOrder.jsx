@@ -5,6 +5,7 @@ import { Link, useLocation, useNavigate } from "react-router-dom";
 import { BiEdit } from "react-icons/bi";
 import { AiFillDelete } from "react-icons/ai";
 import { getSingleOrder } from "../../redux/slices/authSlice";
+import Reloader from "../../components/Reloader";
 
 const ViewOrder = () => {
   const dispatch = useDispatch();
@@ -12,7 +13,7 @@ const ViewOrder = () => {
   const navigate = useNavigate();
 
   const orderId = location.pathname.split("/")[3];
-  const { singleorder } = useSelector((state) => state.auth);
+  const { singleorder, isLoading } = useSelector((state) => state.auth);
   useEffect(() => {
     dispatch(getSingleOrder(orderId));
   }, []);
@@ -109,12 +110,16 @@ const ViewOrder = () => {
   }
   return (
     <div>
-      <div className="mt-4">
-        <h3 className="mb-4">View Order</h3>
-        <div>
-          <Table columns={columns} dataSource={data1} />
+      {isLoading ? (
+        <Reloader />
+      ) : (
+        <div className="mt-4">
+          <h3 className="mb-4">View Order</h3>
+          <div>
+            <Table columns={columns} dataSource={data1} />
+          </div>
         </div>
-      </div>
+      )}
     </div>
   );
 };

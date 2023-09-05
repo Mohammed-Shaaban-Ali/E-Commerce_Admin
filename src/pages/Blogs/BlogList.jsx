@@ -8,6 +8,7 @@ import { AiFillDelete } from "react-icons/ai";
 import { resetState } from "../../redux/slices/brandSlice";
 import { toast } from "react-toastify";
 import CustomModal from "../../components/CustomModal";
+import Reloader from "../../components/Reloader";
 
 const BlogList = () => {
   const [open, setOpen] = useState(false);
@@ -83,12 +84,16 @@ const BlogList = () => {
   };
   return (
     <div>
-      <div className="mt-4">
-        <h3 className="mb-4">Blog List</h3>
-        <div>
-          <Table columns={columns} dataSource={data1} />
+      {isLoading ? (
+        <Reloader />
+      ) : (
+        <div className="mt-4">
+          <h3 className="mb-4">Blog List</h3>
+          <div>
+            <Table columns={columns} dataSource={data1} />
+          </div>
         </div>
-      </div>
+      )}
       <CustomModal
         handleOk={handleOk}
         handleCancel={handleCancel}
