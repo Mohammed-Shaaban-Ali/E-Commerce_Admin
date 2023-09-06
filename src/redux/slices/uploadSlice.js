@@ -5,6 +5,7 @@ export const uploadImg = createAsyncThunk(
   "uploadImg/images",
   async (data, thunkAPI) => {
     try {
+      console.log(data);
       const formData = new FormData();
       for (let i = 0; i < data?.length; i++) {
         formData.append("images", data[i]);
